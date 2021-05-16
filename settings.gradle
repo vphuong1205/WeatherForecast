@@ -1,3 +1,4 @@
+include ':core-viewmodel'
 include ':core-network'
 include ':app'
 rootProject.name = "Weather Forecast"
