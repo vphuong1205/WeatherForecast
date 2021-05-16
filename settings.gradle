@@ -1,3 +1,4 @@
+include ':feature_forecast'
 include ':core-viewmodel'
 include ':core-network'
 include ':app'

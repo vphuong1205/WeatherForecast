@@ -9,6 +9,7 @@ object Dependencies {
         const val MATERIAL = "1.3.0"
         const val RETROFIT = "2.9.0"
         const val DAGGER2 = "2.29.1"
+        const val NAVIGATION = "2.3.5"
     }
 
     object Gradle {
@@ -48,5 +49,14 @@ object Dependencies {
         const val DAGGER_COMPILER = "com.google.dagger:dagger-compiler:${Versions.DAGGER2}"
         const val DAGGER_ANDROID_PROCESSOR =
             "com.google.dagger:dagger-android-processor:${Versions.DAGGER2}"
+    }
+
+    object Navigation {
+        const val NAVIGATION_FRAGMENT_KTX =
+            "androidx.navigation:navigation-fragment-ktx:${Versions.NAVIGATION}"
+        const val NAVIGATION_UI_KTX =
+            "androidx.navigation:navigation-ui-ktx:${Versions.NAVIGATION}"
+        const val NAVIGATION_DYNAMIC_FEATURE_FRAGMENT =
+            "androidx.navigation:navigation-dynamic-features-fragment:${Versions.NAVIGATION}"
     }
 }
