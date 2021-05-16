@@ -7,6 +7,8 @@ object Dependencies {
         const val APPCOMPAT = "1.2.0"
         const val CONSTRAINT_LAYOUT = "2.0.4"
         const val MATERIAL = "1.3.0"
+        const val RETROFIT = "2.9.0"
+        const val DAGGER2 = "2.29.1"
     }
 
     object Gradle {
@@ -35,4 +37,16 @@ object Dependencies {
         const val MATERIAL = "com.google.android.material:material:${Versions.MATERIAL}"
     }
 
+    object Retrofit {
+        const val RETROFIT = "com.squareup.retrofit2:retrofit:${Versions.RETROFIT}"
+        const val CONVERTER_MOSHI = "com.squareup.retrofit2:converter-moshi:${Versions.RETROFIT}"
+    }
+
+    object Dagger {
+        const val DAGGER = "com.google.dagger:dagger:${Versions.DAGGER2}"
+        const val DAGGER_ANDROID = "com.google.dagger:dagger-android:${Versions.DAGGER2}"
+        const val DAGGER_COMPILER = "com.google.dagger:dagger-compiler:${Versions.DAGGER2}"
+        const val DAGGER_ANDROID_PROCESSOR =
+            "com.google.dagger:dagger-android-processor:${Versions.DAGGER2}"
+    }
 }
