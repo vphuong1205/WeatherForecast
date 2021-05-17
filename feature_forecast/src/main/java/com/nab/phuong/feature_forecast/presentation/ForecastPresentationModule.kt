@@ -8,7 +8,7 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 
 @Module(includes = [ViewModelModule::class])
-abstract class ForecastViewModelModule {
+abstract class ForecastPresentationModule {
 
     @Binds
     @IntoMap

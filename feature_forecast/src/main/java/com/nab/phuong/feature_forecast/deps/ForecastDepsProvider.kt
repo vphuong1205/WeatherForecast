@@ -1,6 +1,6 @@
 package com.nab.phuong.feature_forecast.deps
 
-interface PresentationDepsProvider {
+interface ForecastDepsProvider {
 
-    fun providesPresentationDeps(): PresentationComponentDeps
+    fun providesForecastComponentDeps(): ForecastComponentDeps
 }

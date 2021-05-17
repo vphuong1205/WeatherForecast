@@ -5,24 +5,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.nab.phuong.feature_forecast.R
+import androidx.lifecycle.ViewModelProvider
+import com.nab.phuong.core_viewmodel.ViewModelFactory
+import com.nab.phuong.feature_forecast.databinding.FragmentFeatureForecastBinding
+import javax.inject.Inject
 
 class ForecastFragment : Fragment() {
+    private var _binding: FragmentFeatureForecastBinding? = null
+    private val binding get() = _binding!!
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val viewModel by lazy {
+        ViewModelProvider(this, viewModelFactory).get(ForecastViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_feature_forecast, container, false)
+        _binding = FragmentFeatureForecastBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-    }
-
-    companion object {
-
-        fun newInstance() = ForecastFragment()
     }
 }

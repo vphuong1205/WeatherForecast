@@ -1,10 +1,12 @@
 import extension.addAndroidTestsDependencies
 import extension.addTestsDependencies
 import extension.implementation
+import extension.kapt
 
 plugins {
-    id(BuildPlugins.ANDROID_DYNAMIC_FEATURE)
+    id(BuildPlugins.ANDROID_LIBRARY)
     id(BuildPlugins.KOTLIN_ANDROID)
+    id(BuildPlugins.KOTLIN_KAPT)
 }
 
 android {
@@ -12,7 +14,6 @@ android {
     buildToolsVersion(BuildAndroidConfig.BUILD_TOOL_VERSION)
 
     defaultConfig {
-        applicationId("com.nab.phuong.feature_forecast")
         minSdkVersion(BuildAndroidConfig.MIN_SDK)
         targetSdkVersion(BuildAndroidConfig.TARGET_SDK)
         versionCode(BuildAndroidConfig.VERSION_CODE)
@@ -23,8 +24,13 @@ android {
     buildTypes {
         getByName(BuildType.RELEASE) {
             proguardFiles("proguard-android-optimize.txt", "proguard-rules.pro")
-            isMinifyEnabled = false
+            isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
         }
+    }
+
+    buildFeatures {
+        dataBinding = true
+        viewBinding = true
     }
 
     compileOptions {
@@ -38,16 +44,21 @@ android {
 }
 
 dependencies {
-    implementation(project(ModuleDependencies.APP))
+    implementation(project(ModuleDependencies.CORE_VIEWMODEL))
+    implementation(project(ModuleDependencies.CORE_NETWORK))
+
     implementation(Dependencies.Kotlin.KOTLIN)
     implementation(Dependencies.Androidx.CONSTRAINT_LAYOUT)
     implementation(Dependencies.Androidx.CORE_KTX)
     implementation(Dependencies.Retrofit.RETROFIT)
 
+    implementation(Dependencies.Dagger.DAGGER)
+    implementation(Dependencies.Dagger.DAGGER_ANDROID)
+    kapt(Dependencies.Dagger.DAGGER_ANDROID_PROCESSOR)
+    kapt(Dependencies.Dagger.DAGGER_COMPILER)
 
     api(Dependencies.Navigation.NAVIGATION_UI_KTX)
     api(Dependencies.Navigation.NAVIGATION_FRAGMENT_KTX)
-    api(Dependencies.Navigation.NAVIGATION_DYNAMIC_FEATURE_FRAGMENT)
 
     addTestsDependencies()
     addAndroidTestsDependencies()

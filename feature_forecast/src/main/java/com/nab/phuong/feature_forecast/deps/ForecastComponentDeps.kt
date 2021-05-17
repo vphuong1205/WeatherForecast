@@ -1,7 +1,7 @@
 package com.nab.phuong.feature_forecast.deps
 
-import com.nab.phuong.weather.presentation.ForecastFragment
+import com.nab.phuong.feature_forecast.presentation.ForecastFragment
 
-interface PresentationComponentDeps {
+interface ForecastComponentDeps {
     fun inject(forecastFragment: ForecastFragment)
 }
