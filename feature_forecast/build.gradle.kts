@@ -51,6 +51,12 @@ dependencies {
     implementation(Dependencies.Androidx.CONSTRAINT_LAYOUT)
     implementation(Dependencies.Androidx.CORE_KTX)
     implementation(Dependencies.Retrofit.RETROFIT)
+    implementation(Dependencies.Moshi.MOSHI)
+    kapt(Dependencies.Moshi.MOSHI_CODEGEN)
+
+    implementation(Dependencies.Room.ROOM)
+    implementation(Dependencies.Room.ROOM_KTX)
+    kapt(Dependencies.Room.ROOM_COMPILER)
 
     implementation(Dependencies.Dagger.DAGGER)
     implementation(Dependencies.Dagger.DAGGER_ANDROID)

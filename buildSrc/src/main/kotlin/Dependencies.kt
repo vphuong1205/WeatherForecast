@@ -10,6 +10,8 @@ object Dependencies {
         const val RETROFIT = "2.9.0"
         const val DAGGER2 = "2.29.1"
         const val NAVIGATION = "2.3.5"
+        const val ROOM = "2.3.0"
+        const val MOSHI = "1.12.0"
     }
 
     object Gradle {
@@ -43,6 +45,11 @@ object Dependencies {
         const val CONVERTER_MOSHI = "com.squareup.retrofit2:converter-moshi:${Versions.RETROFIT}"
     }
 
+    object Moshi {
+        const val MOSHI = "com.squareup.moshi:moshi-kotlin:${Versions.MOSHI}"
+        const val MOSHI_CODEGEN = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.MOSHI}"
+    }
+
     object Dagger {
         const val DAGGER = "com.google.dagger:dagger:${Versions.DAGGER2}"
         const val DAGGER_ANDROID = "com.google.dagger:dagger-android:${Versions.DAGGER2}"
@@ -56,5 +63,13 @@ object Dependencies {
             "androidx.navigation:navigation-fragment-ktx:${Versions.NAVIGATION}"
         const val NAVIGATION_UI_KTX =
             "androidx.navigation:navigation-ui-ktx:${Versions.NAVIGATION}"
+    }
+
+    object Room {
+        const val ROOM = "androidx.room:room-runtime:${Versions.ROOM}"
+        const val ROOM_COMPILER = "androidx.room:room-compiler:${Versions.ROOM}"
+
+        // optional - Kotlin Extensions and Coroutines support for Room
+        const val ROOM_KTX = "androidx.room:room-ktx:${Versions.ROOM}"
     }
 }
