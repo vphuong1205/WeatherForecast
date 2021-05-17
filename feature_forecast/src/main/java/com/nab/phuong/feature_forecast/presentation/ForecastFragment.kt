@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.nab.phuong.core_viewmodel.ViewModelFactory
 import com.nab.phuong.feature_forecast.databinding.FragmentFeatureForecastBinding
+import com.nab.phuong.feature_forecast.deps.ForecastDepsProvider
 import javax.inject.Inject
 
 class ForecastFragment : Fragment() {
@@ -31,5 +32,8 @@ class ForecastFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        (activity?.application as ForecastDepsProvider).providesForecastComponentDeps().inject(
+            forecastFragment = this
+        )
     }
 }

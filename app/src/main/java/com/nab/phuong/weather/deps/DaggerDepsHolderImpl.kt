@@ -2,7 +2,7 @@ package com.nab.phuong.weather.deps
 
 import android.app.Application
 import com.nab.phuong.core_network.client.NetworkClient
-import com.nab.phuong.weather.presentation.deps.PresentationComponentDeps
+import com.nab.phuong.feature_forecast.deps.ForecastComponentDeps
 
 open class DaggerDepsHolderImpl : DaggerDepsHolder, Application() {
 
@@ -16,7 +16,7 @@ open class DaggerDepsHolderImpl : DaggerDepsHolder, Application() {
         return daggerComponents.networkDaggerComponent.networkClient()
     }
 
-    override fun providesPresentationDeps(): PresentationComponentDeps {
-        return daggerComponents.presentationDaggerComponent
+    override fun providesForecastComponentDeps(): ForecastComponentDeps {
+        return daggerComponents.forecastDaggerComponent
     }
 }
