@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.nab.phuong.weather.databinding.ForecastActivityBinding
 
-class ForecastActivity : AppCompatActivity() {
+class NavHostActivity : AppCompatActivity() {
 
     private lateinit var binding: ForecastActivityBinding
 

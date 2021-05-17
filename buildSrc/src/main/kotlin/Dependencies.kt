@@ -56,7 +56,5 @@ object Dependencies {
             "androidx.navigation:navigation-fragment-ktx:${Versions.NAVIGATION}"
         const val NAVIGATION_UI_KTX =
             "androidx.navigation:navigation-ui-ktx:${Versions.NAVIGATION}"
-        const val NAVIGATION_DYNAMIC_FEATURE_FRAGMENT =
-            "androidx.navigation:navigation-dynamic-features-fragment:${Versions.NAVIGATION}"
     }
 }

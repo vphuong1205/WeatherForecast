@@ -1,10 +1,12 @@
 import extension.addAndroidTestsDependencies
 import extension.addTestsDependencies
 import extension.implementation
+import extension.kapt
 
 plugins {
     id(BuildPlugins.ANDROID_APPLICATION)
     id(BuildPlugins.KOTLIN_ANDROID)
+    id(BuildPlugins.KOTLIN_KAPT)
 }
 
 android {
@@ -57,8 +59,18 @@ dependencies {
     implementation(Dependencies.Androidx.APPCOMPAT)
     implementation(Dependencies.Androidx.CONSTRAINT_LAYOUT)
     implementation(Dependencies.Google.MATERIAL)
+    implementation(Dependencies.Dagger.DAGGER)
+    implementation(Dependencies.Dagger.DAGGER_ANDROID)
+    implementation(Dependencies.Retrofit.RETROFIT)
+    kapt(Dependencies.Dagger.DAGGER_ANDROID_PROCESSOR)
+    kapt(Dependencies.Dagger.DAGGER_COMPILER)
+
+    api(Dependencies.Navigation.NAVIGATION_UI_KTX)
+    api(Dependencies.Navigation.NAVIGATION_FRAGMENT_KTX)
 
     implementation(project(ModuleDependencies.CORE_NETWORK))
+    implementation(project(ModuleDependencies.CORE_VIEWMODEL))
+    implementation(project(ModuleDependencies.FEATURE_FORECAST))
 
     addTestsDependencies()
     addAndroidTestsDependencies()
