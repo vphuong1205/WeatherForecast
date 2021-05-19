@@ -1,5 +1,6 @@
 package com.nab.phuong.feature_forecast.presentation
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,12 @@ class ForecastFragment : Fragment() {
         ViewModelProvider(this, viewModelFactory).get(ForecastViewModel::class.java)
     }
 
+    override fun onAttach(context: Context) {
+        (context.applicationContext as ForecastDepsProvider)
+            .providesForecastComponentDeps().inject(forecastFragment = this)
+        super.onAttach(context)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,10 +37,7 @@ class ForecastFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        (activity?.application as ForecastDepsProvider).providesForecastComponentDeps().inject(
-            forecastFragment = this
-        )
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 }

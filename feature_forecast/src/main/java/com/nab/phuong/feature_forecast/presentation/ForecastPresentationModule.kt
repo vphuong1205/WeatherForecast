@@ -13,5 +13,5 @@ abstract class ForecastPresentationModule {
     @Binds
     @IntoMap
     @ViewModelKey(ForecastViewModel::class)
-    abstract fun buildGoPayHomeViewModel(foreCastViewModel: ForecastViewModel): ViewModel
+    abstract fun bindsForecastViewModel(foreCastViewModel: ForecastViewModel): ViewModel
 }
