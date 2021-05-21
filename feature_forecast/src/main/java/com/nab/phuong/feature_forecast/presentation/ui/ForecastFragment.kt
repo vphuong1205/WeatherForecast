@@ -20,6 +20,8 @@ import com.nab.phuong.feature_forecast.R
 import com.nab.phuong.feature_forecast.databinding.FragmentFeatureForecastBinding
 import com.nab.phuong.feature_forecast.deps.ForecastDepsProvider
 import com.nab.phuong.feature_forecast.presentation.ForecastViewModel
+import com.nab.phuong.feature_forecast.presentation.model.CityState
+import com.nab.phuong.feature_forecast.presentation.model.ForeCastState
 import com.nab.phuong.feature_forecast.presentation.ui.adapter.ForecastListAdapter
 import javax.inject.Inject
 
@@ -62,6 +64,44 @@ class ForecastFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpList()
         setupSearchUI()
+        initialiseObservers()
+        viewModel.loadCitySuggestions()
+    }
+
+    private fun initialiseObservers() {
+        viewModel.forecastState.observe(this.viewLifecycleOwner) { state ->
+            when (state) {
+                is ForeCastState.ListData -> {
+                    binding.buttonError.isVisible = false
+                    binding.progressBarLoading.isVisible = false
+                    forecastListAdapter.submitList(state.data)
+                }
+                ForeCastState.Loading -> {
+                    binding.buttonError.isVisible = false
+                    binding.progressBarLoading.isVisible = true
+                }
+                is ForeCastState.Error -> {
+                    binding.progressBarLoading.isVisible = false
+                    binding.buttonError.isVisible = true
+                    forecastListAdapter.submitList(listOf())
+                    binding.buttonError.text = state.errorMessage
+                }
+                else -> Unit
+            }
+        }
+        viewModel.cityState.observe(this.viewLifecycleOwner) { cityState ->
+            when (cityState) {
+                is CityState.ListData -> {
+                    val suggestions = cityState.data.map { it.name }
+                    citySuggestionAdapter.clear()
+                    citySuggestionAdapter.addAll(suggestions)
+                    citySuggestionAdapter.notifyDataSetChanged()
+                }
+                else -> {
+                    citySuggestionAdapter.clear()
+                }
+            }
+        }
     }
 
     private fun setUpList() {
@@ -133,6 +173,7 @@ class ForecastFragment : Fragment() {
             if (editableText.toString().searchable()) {
                 clearFocus()
                 hideKeyboard()
+                viewModel.searchForecastByCity(cityName = binding.editTextCityName.text.toString())
             }
         }
     }

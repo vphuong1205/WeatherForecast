@@ -6,11 +6,13 @@ import com.nab.phuong.feature_forecast.domain.model.ForecastResult
 
 interface ForecastRepository {
 
+    suspend fun getCityByName(cityName: String): ForecastResult<City>
+
     suspend fun queryForecasts(
         cityName: String,
-        cityId: String? = null,
+        cityId: Long? = null,
         limitDaysCount: Int = 7
     ): ForecastResult<Forecast>
 
-    suspend fun queryCities(cityName: String): ForecastResult<City>
+    suspend fun loadCities(): ForecastResult<City>
 }

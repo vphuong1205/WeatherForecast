@@ -1,11 +1,68 @@
 package com.nab.phuong.feature_forecast.presentation
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.nab.phuong.feature_forecast.domain.model.City
+import com.nab.phuong.feature_forecast.domain.model.Forecast
+import com.nab.phuong.feature_forecast.domain.model.ForecastResult
 import com.nab.phuong.feature_forecast.domain.usecase.ForecastUseCase
+import com.nab.phuong.feature_forecast.presentation.model.CityState
+import com.nab.phuong.feature_forecast.presentation.model.ForeCastState
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ForecastViewModel @Inject constructor(
-    private val forecastUseCase: ForecastUseCase
+    private val forecastUseCase: ForecastUseCase,
+    private val dispatcher: CoroutinesDispatcherProvider,
 ) : ViewModel() {
 
+    private val _forecastState = MutableLiveData<ForeCastState>()
+    val forecastState: LiveData<ForeCastState> = _forecastState
+
+    private val _cityState = MutableLiveData<CityState>()
+    val cityState: LiveData<CityState> = _cityState
+
+    fun searchForecastByCity(cityName: String) {
+        viewModelScope.launch(dispatcher.io) {
+
+            _forecastState.postValue(ForeCastState.Loading)
+
+            val cityId = getCityId(result = forecastUseCase.getCityByName(cityName = cityName))
+
+            when (val result =
+                forecastUseCase.searchForecasts(cityName = cityName, cityId = cityId)) {
+                is ForecastResult.Success<Forecast> -> {
+                    _forecastState.postValue(ForeCastState.ListData(data = result.data))
+                    if (cityId == null) {
+                        loadCitySuggestions()
+                    }
+                }
+                is ForecastResult.Error -> {
+                    _forecastState.postValue(ForeCastState.Error(errorMessage = result.message))
+                }
+                else -> {
+                    _forecastState.postValue(ForeCastState.Empty)
+                }
+            }
+        }
+    }
+
+    fun loadCitySuggestions() {
+        viewModelScope.launch(dispatcher.io) {
+            when (val result = forecastUseCase.loadCities()) {
+                is ForecastResult.Success<City> -> {
+                    _cityState.postValue(CityState.ListData(result.data))
+                }
+            }
+        }
+    }
+
+    private fun getCityId(result: ForecastResult<City>): Long? =
+        if (result is ForecastResult.Success && result.data.isNotEmpty()) {
+            result.data.first().cityId
+        } else {
+            null
+        }
 }

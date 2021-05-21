@@ -8,7 +8,6 @@ import com.nab.phuong.feature_forecast.domain.model.City
 import com.nab.phuong.feature_forecast.domain.model.Forecast
 import com.nab.phuong.feature_forecast.domain.model.ForecastResult
 import com.nab.phuong.feature_forecast.domain.repository.ForecastRepository
-import java.net.UnknownHostException
 
 class ForecastRepositoryImpl(
     private val forecastDao: ForecastDao,
@@ -18,16 +17,23 @@ class ForecastRepositoryImpl(
     private val appID: String
 ) : ForecastRepository {
 
+    override suspend fun getCityByName(cityName: String): ForecastResult<City> {
+        cityDao.getCityByName(cityName = cityName)?.let {
+            return ForecastResult.Success(listOf(forecastMapper.mapToDomainModel(input = it)))
+        }
+        return ForecastResult.Success(listOf())
+    }
+
     /**
      * Local first, network only when needed
      */
     override suspend fun queryForecasts(
         cityName: String,
-        cityId: String?,
+        cityId: Long?,
         limitDaysCount: Int
     ): ForecastResult<Forecast> {
 
-        if (!cityId.isNullOrEmpty()) {
+        if (cityId != null) {
             val forecasts = loadForecastsFromLocal(cityId = cityId, limitDaysCount = limitDaysCount)
             if (forecasts.size == limitDaysCount) {
                 return ForecastResult.Success(data = forecasts)
@@ -50,20 +56,20 @@ class ForecastRepositoryImpl(
                     )
                 }
             )
-        } catch (exception: UnknownHostException) {
-            ForecastResult.Error(throwable = exception)
+        } catch (exception: Exception) {
+            ForecastResult.Error(forecastMapper.parseExceptionToErrorMessage(exception = exception))
         }
     }
 
-    override suspend fun queryCities(cityName: String): ForecastResult<City> {
-        val cities = cityDao.getCityByName(city = cityName).map {
+    override suspend fun loadCities(): ForecastResult<City> {
+        val cities = cityDao.getAllCities().map {
             forecastMapper.mapToDomainModel(input = it)
         }
         return ForecastResult.Success(data = cities)
     }
 
     private suspend fun loadForecastsFromLocal(
-        cityId: String,
+        cityId: Long,
         limitDaysCount: Int
     ): List<Forecast> {
         return forecastDao.getForecastByCity(

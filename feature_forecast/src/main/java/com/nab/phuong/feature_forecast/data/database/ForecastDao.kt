@@ -10,7 +10,7 @@ import com.nab.phuong.feature_forecast.data.database.model.ForecastDataModel
 interface ForecastDao {
     @Query("SELECT * FROM forecast WHERE date >= :dateTime AND cityId like :cityId ORDER BY date DESC LIMIT :limitDays")
     suspend fun getForecastByCity(
-        cityId: String,
+        cityId: Long,
         limitDays: Int,
         dateTime: Long
     ): List<ForecastDataModel>

@@ -12,10 +12,10 @@ interface CityDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCity(city: CityDataModel)
 
-    @Query("SELECT * FROM city WHERE name like '%' || :city || '%'|| '%' ORDER BY name DESC")
-    suspend fun getCityByName(city: String? = EMPTY_STRING): List<CityDataModel>
+    @Query("SELECT * FROM city ORDER BY name DESC")
+    suspend fun getAllCities(): List<CityDataModel>
 
-    companion object {
-        const val EMPTY_STRING = ""
-    }
+    @Query("SELECT * FROM city WHERE name LIKE :cityName ORDER BY name DESC LIMIT 1")
+    suspend fun getCityByName(cityName: String): CityDataModel?
+
 }
