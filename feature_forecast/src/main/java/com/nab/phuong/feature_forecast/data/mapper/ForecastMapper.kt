@@ -19,4 +19,6 @@ interface ForecastMapper {
     fun mapToDomainModel(input: CityDataModel): City
 
     fun mapToDatabaseModel(input: ForecastCityClusterModel): ForecastDataModel
+
+    fun parseExceptionToErrorMessage(exception: Exception): String
 }

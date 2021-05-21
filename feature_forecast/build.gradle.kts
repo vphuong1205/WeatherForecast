@@ -19,6 +19,9 @@ android {
         versionCode(BuildAndroidConfig.VERSION_CODE)
         versionName(BuildAndroidConfig.VERSION_NAME)
         testInstrumentationRunner(BuildAndroidConfig.TEST_INSTRUMENTATION_RUNNER)
+
+        buildConfigFieldFromGradleProperty("apiBaseUrl")
+        buildConfigFieldFromGradleProperty("apiAppId")
     }
 
     buildTypes {
@@ -49,6 +52,7 @@ dependencies {
 
     implementation(Dependencies.Kotlin.KOTLIN)
     implementation(Dependencies.Androidx.CONSTRAINT_LAYOUT)
+    implementation(Dependencies.Google.MATERIAL)
     implementation(Dependencies.Androidx.CORE_KTX)
     implementation(Dependencies.Retrofit.RETROFIT)
     implementation(Dependencies.Moshi.MOSHI)
@@ -69,3 +73,18 @@ dependencies {
     addTestsDependencies()
     addAndroidTestsDependencies()
 }
+
+/*
+Takes value from Gradle project property and sets it as build config property
+ */
+fun com.android.build.gradle.internal.dsl.BaseFlavor.buildConfigFieldFromGradleProperty(
+    gradlePropertyName: String
+) {
+    val propertyValue = project.properties[gradlePropertyName] as? String
+    checkNotNull(propertyValue) { "Gradle property $gradlePropertyName is null" }
+
+    val androidResourceName = "GRADLE_${gradlePropertyName.toSnakeCase()}".toUpperCase()
+    buildConfigField("String", androidResourceName, propertyValue)
+}
+
+fun String.toSnakeCase() = this.split(Regex("(?=[A-Z])")).joinToString("_") { it.toLowerCase() }

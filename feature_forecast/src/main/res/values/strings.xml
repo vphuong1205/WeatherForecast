@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_forecast_name">Forecast Feature</string>
+    <string name="feature_forecast_date">Date: %1$2s</string>
+    <string name="feature_forecast_temperature">Average temperature: %1$2d\u2103</string>
+    <string name="feature_forecast_pressure">Pressure: %1$2d</string>
+    <string name="feature_forecast_humidity">Humidity: %1$2d</string>
+    <string name="feature_forecast_description">Description: %1$2s</string>
+    <string name="feature_forecast_enter_city_name_message">Enter city name</string>
+    <string name="feature_forecast_internet_error_message">No internet connection</string>
+    <string name="feature_forecast_get_weather_title">Get Weather</string>
+    <string name="feature_forecast_get_weather_button">Get Weather Button</string>
+    <string name="feature_forecast_query_length_error">At least %1$2d chars required to search</string>
+    <string name="feature_forecast_query_icon_error_description">City name is too short error</string>
+    <string name="feature_forecast_query_content_searchable">The city name is searchable</string>
+    <string name="feature_forecast_server_error_message">Service is not available, please try again later!</string>
+    <string name="feature_forecast_not_found_error_message">City name seem not correct, please check it!</string>
+    <string name="feature_forecast_common_error_message">There is something wrong happen, please try again later!</string>
 </resources>

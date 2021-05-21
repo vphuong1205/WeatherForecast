@@ -2,6 +2,7 @@ package com.nab.phuong.feature_forecast.data
 
 import android.content.Context
 import com.nab.phuong.core_network.client.NetworkClient
+import com.nab.phuong.feature_forecast.BuildConfig
 import com.nab.phuong.feature_forecast.data.database.ForecastDatabase
 import com.nab.phuong.feature_forecast.data.mapper.ForecastMapper
 import com.nab.phuong.feature_forecast.data.mapper.ForecastMapperImpl
@@ -29,8 +30,8 @@ class ForecastDataModule {
 
     @Provides
     @Singleton
-    fun providesForecastMapperImpl(): ForecastMapper {
-        return ForecastMapperImpl()
+    fun providesForecastMapperImpl(context: Context): ForecastMapper {
+        return ForecastMapperImpl(resource = context.resources)
     }
 
     @Provides
@@ -45,7 +46,7 @@ class ForecastDataModule {
             cityDao = database.cityDao(),
             apiService = apiService,
             forecastMapper = forecastMapper,
-            appID = ""
+            appID = BuildConfig.GRADLE_API_APP_ID
         )
     }
 }
