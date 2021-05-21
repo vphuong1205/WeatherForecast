@@ -66,11 +66,7 @@ class ForecastMapperImpl @Inject constructor(private val resource: Resources) : 
     override fun parseExceptionToErrorMessage(exception: Exception): String {
         return when (exception) {
             is HttpException -> {
-                if (exception.code() == NOT_FOUND_ERROR_CODE) {
-                    resource.getString(R.string.feature_forecast_not_found_error_message)
-                } else {
-                    resource.getString(R.string.feature_forecast_server_error_message)
-                }
+                handleHttpException(httpException = exception)
             }
             is UnknownHostException -> {
                 resource.getString(R.string.feature_forecast_server_error_message)
@@ -78,6 +74,18 @@ class ForecastMapperImpl @Inject constructor(private val resource: Resources) : 
             else -> {
                 resource.getString(R.string.feature_forecast_common_error_message)
             }
+        }
+    }
+
+    private fun handleHttpException(httpException: HttpException) = when (httpException.code()) {
+        NOT_FOUND_ERROR_CODE -> {
+            resource.getString(R.string.feature_forecast_not_found_error_message)
+        }
+        NOT_AUTHORIZED_ERROR_CODE -> {
+            resource.getString(R.string.feature_forecast_not_authorized_error_message)
+        }
+        else -> {
+            resource.getString(R.string.feature_forecast_server_error_message)
         }
     }
 
@@ -93,6 +101,7 @@ class ForecastMapperImpl @Inject constructor(private val resource: Resources) : 
         private const val DATE_FORMAT_PATTERN = "EEE, dd MMM yyyy"
         private const val IN_MILLISECOND = 1000
         private const val DELIMITER = ", "
+        private const val NOT_AUTHORIZED_ERROR_CODE = 401
         private const val NOT_FOUND_ERROR_CODE = 404
     }
 }
