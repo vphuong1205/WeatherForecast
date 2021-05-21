@@ -13,9 +13,11 @@ import com.nab.phuong.feature_forecast.domain.model.Forecast
 import com.nab.phuong.feature_forecast.data.network.response.ForecastApiResponse
 import retrofit2.HttpException
 import java.net.UnknownHostException
+import java.net.UnknownServiceException
 import java.text.SimpleDateFormat
 import java.util.Locale
 import javax.inject.Inject
+import javax.net.ssl.SSLPeerUnverifiedException
 
 class ForecastMapperImpl @Inject constructor(private val resource: Resources) : ForecastMapper {
 
@@ -70,6 +72,12 @@ class ForecastMapperImpl @Inject constructor(private val resource: Resources) : 
             }
             is UnknownHostException -> {
                 resource.getString(R.string.feature_forecast_server_error_message)
+            }
+            is UnknownServiceException -> {
+                resource.getString(R.string.feature_forecast_api_clear_text_message)
+            }
+            is SSLPeerUnverifiedException -> {
+                resource.getString(R.string.feature_forecast_security_certificate_error_message)
             }
             else -> {
                 resource.getString(R.string.feature_forecast_common_error_message)

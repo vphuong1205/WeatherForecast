@@ -17,4 +17,6 @@
     <string name="feature_forecast_not_found_error_message">City name seem not correct, please check it!</string>
     <string name="feature_forecast_not_authorized_error_message">Seem app is deprecated, please check new version</string>
     <string name="feature_forecast_common_error_message">There is something wrong happen, please try again later!</string>
+    <string name="feature_forecast_api_clear_text_message">Network security policy error, CLEARTEXT communication to server not permitted!</string>
+    <string name="feature_forecast_security_certificate_error_message">Network security error, certificate pinning failure!</string>
 </resources>

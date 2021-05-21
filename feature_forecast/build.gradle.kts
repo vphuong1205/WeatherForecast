@@ -19,8 +19,6 @@ android {
         versionCode(BuildAndroidConfig.VERSION_CODE)
         versionName(BuildAndroidConfig.VERSION_NAME)
         testInstrumentationRunner(BuildAndroidConfig.TEST_INSTRUMENTATION_RUNNER)
-
-        buildConfigFieldFromGradleProperty("apiBaseUrl")
         buildConfigFieldFromGradleProperty("apiAppId")
     }
 
