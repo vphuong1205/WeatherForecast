@@ -6,14 +6,18 @@ import com.nab.phuong.core_network.deps.DaggerNetworkComponent
 import com.nab.phuong.core_network.deps.NetworkComponent
 import com.nab.phuong.feature_forecast.deps.DaggerForecastComponent
 import com.nab.phuong.feature_forecast.deps.ForecastComponent
+import com.nab.phuong.weather.BuildConfig
 
 class DaggerComponents(private val application: Application) {
     private val networkConfig by lazy {
         NetworkConfig(
-            connectionTimeout = 30L,
-            readTimeout = 30L,
-            writeTimeout = 30L,
-            baseUrl = "https://api.openweathermap.org/data/2.5/"
+            baseUrl = BuildConfig.GRADLE_API_BASE_URL,
+            pinnerHost = BuildConfig.GRADLE_PINNING_CERTIFICATE_PATTERN,
+            pinnerCertificates = listOf(
+                BuildConfig.GRADLE_PINNING_CERTIFICATE_MAIN,
+                BuildConfig.GRADLE_PINNING_CERTIFICATE_BACKUP1,
+                BuildConfig.GRADLE_PINNING_CERTIFICATE_BACKUP2
+            )
         )
     }
 

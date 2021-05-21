@@ -1,6 +1,7 @@
 package com.nab.phuong.core_network.client
 
 import com.nab.phuong.core_network.NetworkConfig
+import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
@@ -39,13 +40,17 @@ class NetworkClientImpl @Inject constructor(
     }
 
     private fun setupOkHttp(): OkHttpClient {
+        val certificatePinnerBuilder = CertificatePinner.Builder()
+        config.pinnerCertificates.forEach {
+            certificatePinnerBuilder.add(config.pinnerHost, it)
+        }
+
         return OkHttpClient.Builder()
-            .readTimeout(NETWORK_TIMEOUT_LONG, TimeUnit.SECONDS)
-            .connectTimeout(NETWORK_TIMEOUT_LONG, TimeUnit.SECONDS)
+            .readTimeout(config.readTimeout, TimeUnit.SECONDS)
+            .writeTimeout(config.writeTimeout, TimeUnit.SECONDS)
+            .connectTimeout(config.connectionTimeout, TimeUnit.SECONDS)
+            .certificatePinner(certificatePinnerBuilder.build())
             .build()
     }
 
-    companion object {
-        const val NETWORK_TIMEOUT_LONG = 30L
-    }
 }

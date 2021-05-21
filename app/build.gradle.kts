@@ -21,6 +21,12 @@ android {
         versionCode(BuildAndroidConfig.VERSION_CODE)
         versionName(BuildAndroidConfig.VERSION_NAME)
         testInstrumentationRunner(BuildAndroidConfig.TEST_INSTRUMENTATION_RUNNER)
+
+        buildConfigFieldFromGradleProperty("apiBaseUrl")
+        buildConfigFieldFromGradleProperty("pinningCertificatePattern")
+        buildConfigFieldFromGradleProperty("pinningCertificateMain")
+        buildConfigFieldFromGradleProperty("pinningCertificateBackup1")
+        buildConfigFieldFromGradleProperty("pinningCertificateBackup2")
     }
 
     buildTypes {
@@ -75,3 +81,18 @@ dependencies {
     addTestsDependencies()
     addAndroidTestsDependencies()
 }
+
+/*
+Takes value from Gradle project property and sets it as build config property
+ */
+fun com.android.build.gradle.internal.dsl.BaseFlavor.buildConfigFieldFromGradleProperty(
+    gradlePropertyName: String
+) {
+    val propertyValue = project.properties[gradlePropertyName] as? String
+    checkNotNull(propertyValue) { "Gradle property $gradlePropertyName is null" }
+
+    val androidResourceName = "GRADLE_${gradlePropertyName.toSnakeCase()}".toUpperCase()
+    buildConfigField("String", androidResourceName, propertyValue)
+}
+
+fun String.toSnakeCase() = this.split(Regex("(?=[A-Z])")).joinToString("_") { it.toLowerCase() }
