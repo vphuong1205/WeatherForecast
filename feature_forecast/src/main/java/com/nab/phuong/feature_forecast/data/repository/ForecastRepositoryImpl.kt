@@ -1,5 +1,6 @@
 package com.nab.phuong.feature_forecast.data.repository
 
+import androidx.annotation.VisibleForTesting
 import com.nab.phuong.feature_forecast.data.database.CityDao
 import com.nab.phuong.feature_forecast.data.database.ForecastDao
 import com.nab.phuong.feature_forecast.data.mapper.ForecastMapper
@@ -85,7 +86,8 @@ class ForecastRepositoryImpl(
      * With limitDay =7
      * Get the base time from 7 days before today
      */
-    private fun backToLimitTimesBaseTodayTime(limitDay: Int) =
+    @VisibleForTesting
+    fun backToLimitTimesBaseTodayTime(limitDay: Int) =
         (System.currentTimeMillis() / DAY_IN_MILLIS * DAY_IN_MILLIS) - limitDay * DAY_IN_MILLIS
 
     companion object {
