@@ -1,4 +1,4 @@
-package com.nab.phuong.feature_forecast.presentation
+package com.nab.phuong.feature_forecast.presentation.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

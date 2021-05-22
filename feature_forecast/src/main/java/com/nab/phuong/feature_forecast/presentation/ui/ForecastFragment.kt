@@ -19,7 +19,7 @@ import com.nab.phuong.core_viewmodel.ViewModelFactory
 import com.nab.phuong.feature_forecast.R
 import com.nab.phuong.feature_forecast.databinding.FragmentFeatureForecastBinding
 import com.nab.phuong.feature_forecast.deps.ForecastDepsProvider
-import com.nab.phuong.feature_forecast.presentation.ForecastViewModel
+import com.nab.phuong.feature_forecast.presentation.viewmodel.ForecastViewModel
 import com.nab.phuong.feature_forecast.presentation.model.CityState
 import com.nab.phuong.feature_forecast.presentation.model.ForeCastState
 import com.nab.phuong.feature_forecast.presentation.ui.adapter.ForecastListAdapter

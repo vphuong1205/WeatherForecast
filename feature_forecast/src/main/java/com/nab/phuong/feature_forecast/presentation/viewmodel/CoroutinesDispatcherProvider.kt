@@ -1,4 +1,4 @@
-package com.nab.phuong.feature_forecast.presentation
+package com.nab.phuong.feature_forecast.presentation.viewmodel
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers.Default
