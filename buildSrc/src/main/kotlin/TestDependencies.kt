@@ -1,14 +1,21 @@
 object TestDependencies {
     private object Versions {
-        const val JUNIT = "4.13.2"
         const val JUNIT5 = "5.4.0"
-        const val MOCKITO = "2.20.0"
+        const val MOCKITO = "2.25.0"
         const val EXT_JUNIT = "1.1.2"
         const val ESPRESSO_CORE = "3.3.0"
+        const val COROUTINE = "1.4.3"
+        const val KOTLIN_TEST = "1.4.31"
+    }
+
+    object Coroutine {
+        const val COROUTINE_TEST =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.COROUTINE}"
     }
 
     object Junit {
         const val EXT = "androidx.test.ext:junit:${Versions.EXT_JUNIT}"
+        const val KOTLIN_TEST = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.KOTLIN_TEST}"
     }
 
     object Espresso {

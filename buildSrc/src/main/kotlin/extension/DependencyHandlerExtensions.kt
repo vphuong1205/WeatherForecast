@@ -71,6 +71,8 @@ fun DependencyHandler.addTestsDependencies() {
     testImplementation(TestDependencies.Jupiter.JUNIT5_API)
     testRuntimeOnly(TestDependencies.Jupiter.JUNIT5_ENGINE)
     testImplementation(TestDependencies.Jupiter.JUNIT5_MOCKITO)
+    testImplementation(TestDependencies.Coroutine.COROUTINE_TEST)
+    testImplementation(TestDependencies.Junit.KOTLIN_TEST)
 }
 
 fun DependencyHandler.addAndroidTestsDependencies() {
