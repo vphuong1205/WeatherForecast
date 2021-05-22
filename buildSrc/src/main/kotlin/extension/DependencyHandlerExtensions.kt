@@ -54,6 +54,9 @@ fun DependencyHandler.testImplementation(dependencyNotation: String): Dependency
     add("testImplementation", dependencyNotation)
 
 
+fun DependencyHandler.testRuntimeOnly(dependencyNotation: String): Dependency? =
+    add("testRuntimeOnly", dependencyNotation)
+
 /**
  * Adds a dependency to the `androidTestImplementation` configuration.
  *
@@ -65,7 +68,9 @@ fun DependencyHandler.androidTestImplementation(dependencyNotation: String): Dep
     add("androidTestImplementation", dependencyNotation)
 
 fun DependencyHandler.addTestsDependencies() {
-    testImplementation(TestDependencies.Junit.JUNIT)
+    testImplementation(TestDependencies.Jupiter.JUNIT5_API)
+    testRuntimeOnly(TestDependencies.Jupiter.JUNIT5_ENGINE)
+    testImplementation(TestDependencies.Jupiter.JUNIT5_MOCKITO)
 }
 
 fun DependencyHandler.addAndroidTestsDependencies() {
