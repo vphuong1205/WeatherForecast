@@ -12,6 +12,13 @@ object DataForTesting {
     internal val londonCity = City(cityId = 1, name = LONDON_CITY_NAME)
 
     internal const val NETWORK_ERROR_MESSAGE = "Network error happened"
+
+    internal val cityList = listOf(
+        City(cityId = 1, name = LONDON_CITY_NAME),
+        City(cityId = 2, name = "Paris"),
+        City(cityId = 3, name = "Saigon City")
+    )
+
     internal val forecast = Forecast(
         date = "Today",
         averageTemperature = "20",
@@ -19,6 +26,16 @@ object DataForTesting {
         humidity = "345",
         description = "Windy"
     )
+
+    internal val forecastList = listOf(
+        forecast,
+        forecast,
+        forecast,
+        forecast,
+        forecast,
+        forecast
+    )
+
     internal val forecastDataModel = ForecastDataModel(
         cityId = 1,
         date = 1,
@@ -41,7 +58,7 @@ object DataForTesting {
 
     private val cityNetwork = CityNetworkModel(
         cityId = 1,
-        name = "Hanoi",
+        name = LONDON_CITY_NAME,
     )
 
     internal val response = ForecastApiResponse(

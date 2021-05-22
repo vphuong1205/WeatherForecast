@@ -1,29 +1,29 @@
 package com.nab.phuong.feature_forecast.presentation.viewmodel
 
 import androidx.lifecycle.Observer
-import com.nab.phuong.feature_forecast.domain.model.City
 import com.nab.phuong.feature_forecast.domain.model.Forecast
 import com.nab.phuong.feature_forecast.domain.model.ForecastResult
 import com.nab.phuong.feature_forecast.domain.usecase.ForecastUseCase
 import com.nab.phuong.feature_forecast.presentation.model.CityState
 import com.nab.phuong.feature_forecast.presentation.model.ForeCastState
+import com.nab.phuong.feature_forecast.utils.DataForTesting
 import com.nab.phuong.feature_forecast.utils.InstantExecutorExtension
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.extension.ExtendWith
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.ArgumentCaptor
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.MockitoAnnotations
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
+import org.mockito.MockitoAnnotations
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -72,7 +72,7 @@ internal class ForecastViewModelTest {
     @Test
     internal fun `Given a cached city list  when load city suggestions then expose city list to observer`() {
         testDispatcher.runBlockingTest {
-            val result = ForecastResult.Success(data = cityList)
+            val result = ForecastResult.Success(data = DataForTesting.cityList)
             `when`(forecastUseCase.loadCities()).thenReturn(result)
 
             viewModel.loadCitySuggestions()
@@ -81,7 +81,7 @@ internal class ForecastViewModelTest {
                 cityCaptor.capture()
             )
             val state = cityCaptor.value as CityState.ListData
-            assertEquals(state.data, cityList)
+            assertEquals(state.data, DataForTesting.cityList)
         }
     }
 
@@ -89,9 +89,11 @@ internal class ForecastViewModelTest {
     internal fun `Given a city name when search forecast by city success then expose list forecast to observer`() {
         testDispatcher.runBlockingTest {
             val result = ForecastResult.Success<Forecast>(data = listOf())
-            `when`(forecastUseCase.searchForecasts(cityName = LONDON_CITY)).thenReturn(result)
+            `when`(forecastUseCase.searchForecasts(cityName = DataForTesting.LONDON_CITY_NAME)).thenReturn(
+                result
+            )
 
-            viewModel.searchForecastByCity(cityName = LONDON_CITY)
+            viewModel.searchForecastByCity(cityName = DataForTesting.LONDON_CITY_NAME)
 
             verify(testForecastObserver, Mockito.times(2)).onChanged(
                 foreCastCaptor.capture()
@@ -108,10 +110,14 @@ internal class ForecastViewModelTest {
     @Test
     internal fun `Given a city name when search forecast by city failed then expose error to observer`() {
         testDispatcher.runBlockingTest {
-            val result = ForecastResult.Error<Forecast>(message = NETWORK_ERROR_MESSAGE)
-            `when`(forecastUseCase.searchForecasts(cityName = LONDON_CITY)).thenReturn(result)
+            val result = ForecastResult.Error<Forecast>(
+                message = DataForTesting.NETWORK_ERROR_MESSAGE
+            )
+            `when`(forecastUseCase.searchForecasts(cityName = DataForTesting.LONDON_CITY_NAME)).thenReturn(
+                result
+            )
 
-            viewModel.searchForecastByCity(cityName = LONDON_CITY)
+            viewModel.searchForecastByCity(cityName = DataForTesting.LONDON_CITY_NAME)
 
             verify(testForecastObserver, Mockito.times(2)).onChanged(
                 foreCastCaptor.capture()
@@ -120,23 +126,32 @@ internal class ForecastViewModelTest {
             assertTrue(foreCastCaptor.allValues[0] is ForeCastState.Loading)
             assertTrue(foreCastCaptor.allValues[1] is ForeCastState.Error)
             val lastState = foreCastCaptor.value as ForeCastState.Error
-            assertEquals(lastState.errorMessage, NETWORK_ERROR_MESSAGE)
+            assertEquals(lastState.errorMessage, DataForTesting.NETWORK_ERROR_MESSAGE)
         }
     }
 
     @Test
     internal fun `Given a city name which cached in database when search forecast by city then expose list forecasts to observer`() {
         testDispatcher.runBlockingTest {
-            val cities = ForecastResult.Success(data = listOf(cityList.first()))
-            `when`(forecastUseCase.getCityByName(cityName = LONDON_CITY)).thenReturn(
+            val cities = ForecastResult.Success(data = listOf(DataForTesting.cityList.first()))
+            `when`(
+                forecastUseCase.getCityByName(
+                    cityName = DataForTesting.LONDON_CITY_NAME
+                )
+            ).thenReturn(
                 cities
             )
             val forecast = ForecastResult.Success<Forecast>(data = listOf())
-            `when`(forecastUseCase.searchForecasts(cityName = LONDON_CITY, cityId = 1)).thenReturn(
+            `when`(
+                forecastUseCase.searchForecasts(
+                    cityName = DataForTesting.LONDON_CITY_NAME,
+                    cityId = 1
+                )
+            ).thenReturn(
                 forecast
             )
 
-            viewModel.searchForecastByCity(cityName = LONDON_CITY)
+            viewModel.searchForecastByCity(cityName = DataForTesting.LONDON_CITY_NAME)
 
             verify(testForecastObserver, Mockito.times(2)).onChanged(
                 foreCastCaptor.capture()
@@ -149,16 +164,4 @@ internal class ForecastViewModelTest {
 
     private inline fun <reified T : Any> argumentCaptor(): ArgumentCaptor<T> =
         ArgumentCaptor.forClass(T::class.java)
-
-    companion object {
-        private const val NETWORK_ERROR_MESSAGE = "Net work error happened"
-        private const val LONDON_CITY = "London"
-        private const val PARIS_CITY = "Paris"
-        private const val HCM_CITY = "Saigon City"
-        private val cityList = listOf(
-            City(cityId = 1, name = LONDON_CITY),
-            City(cityId = 2, name = PARIS_CITY),
-            City(cityId = 3, name = HCM_CITY)
-        )
-    }
 }
