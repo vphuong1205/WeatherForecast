@@ -6,6 +6,8 @@ object TestDependencies {
         const val ESPRESSO_CORE = "3.3.0"
         const val COROUTINE = "1.4.3"
         const val KOTLIN_TEST = "1.4.31"
+        const val ROOM = "2.3.0"
+        const val CORE_TESTING = "2.1.0"
     }
 
     object Coroutine {
@@ -26,5 +28,13 @@ object TestDependencies {
         const val JUNIT5_API = "org.junit.jupiter:junit-jupiter-api:${Versions.JUNIT5}"
         const val JUNIT5_ENGINE = "org.junit.jupiter:junit-jupiter-engine:${Versions.JUNIT5}"
         const val JUNIT5_MOCKITO = "org.mockito:mockito-junit-jupiter:${Versions.MOCKITO}"
+    }
+
+    object Room {
+        const val ROOM_TESTING = "androidx.room:room-testing:${Versions.ROOM}"
+    }
+
+    object Androidx {
+        const val CORE_TESTING = "androidx.arch.core:core-testing:${Versions.CORE_TESTING}"
     }
 }

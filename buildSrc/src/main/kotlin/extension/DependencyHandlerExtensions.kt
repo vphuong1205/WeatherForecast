@@ -78,4 +78,8 @@ fun DependencyHandler.addTestsDependencies() {
 fun DependencyHandler.addAndroidTestsDependencies() {
     androidTestImplementation(TestDependencies.Junit.EXT)
     androidTestImplementation(TestDependencies.Espresso.CORE)
+    androidTestImplementation(TestDependencies.Coroutine.COROUTINE_TEST)
+    androidTestImplementation(TestDependencies.Junit.KOTLIN_TEST)
+    androidTestImplementation(TestDependencies.Room.ROOM_TESTING)
+    androidTestImplementation(TestDependencies.Androidx.CORE_TESTING)
 }
