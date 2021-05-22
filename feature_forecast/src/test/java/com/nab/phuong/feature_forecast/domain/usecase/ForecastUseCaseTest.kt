@@ -27,7 +27,6 @@ class ForecastUseCaseTest {
         forecastUseCase = ForecastUseCaseImpl(forecastRepository = forecastRepository)
     }
 
-
     @Test
     fun `Given a city name when get city by name success then return success cities result to caller`() {
         runBlockingTest {

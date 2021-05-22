@@ -1,21 +1,19 @@
 package com.nab.phuong.feature_forecast.data.mapper
 
 import android.content.res.Resources
-import android.text.TextUtils
 import com.nab.phuong.feature_forecast.R
 import com.nab.phuong.feature_forecast.data.database.model.CityDataModel
 import com.nab.phuong.feature_forecast.data.database.model.ForecastDataModel
 import com.nab.phuong.feature_forecast.data.network.model.CityNetworkModel
 import com.nab.phuong.feature_forecast.data.network.model.ForecastCityClusterModel
-import com.nab.phuong.feature_forecast.data.network.model.WeatherNetworkModel
+import com.nab.phuong.feature_forecast.data.network.response.ForecastApiResponse
 import com.nab.phuong.feature_forecast.domain.model.City
 import com.nab.phuong.feature_forecast.domain.model.Forecast
-import com.nab.phuong.feature_forecast.data.network.response.ForecastApiResponse
 import retrofit2.HttpException
 import java.net.UnknownHostException
 import java.net.UnknownServiceException
 import java.text.SimpleDateFormat
-import java.util.Locale
+import java.util.*
 import javax.inject.Inject
 import javax.net.ssl.SSLPeerUnverifiedException
 
@@ -61,7 +59,9 @@ class ForecastMapperImpl @Inject constructor(private val resource: Resources) : 
             maxTemperature = forecastNetworkModel.temp.maximum,
             pressure = forecastNetworkModel.pressure,
             humidity = forecastNetworkModel.humidity,
-            description = forecastNetworkModel.weathers.toJoinedDescription()
+            description = forecastNetworkModel.weathers.joinToString(separator = DELIMITER) {
+                it.description
+            }
         )
     }
 
@@ -96,9 +96,6 @@ class ForecastMapperImpl @Inject constructor(private val resource: Resources) : 
             resource.getString(R.string.feature_forecast_server_error_message)
         }
     }
-
-    private fun List<WeatherNetworkModel>.toJoinedDescription() =
-        TextUtils.join(DELIMITER, this.map { it.description })
 
     private fun Long.toDisplayDateTime() =
         SimpleDateFormat(DATE_FORMAT_PATTERN, Locale.getDefault()).format(this)
