@@ -12,6 +12,9 @@ Modularized code-base approach with Single-Activity Architecture with Navigation
 
 We can think about each feature as the equivalent of microservice or private library.
 
+This is a diagram present dependencies between project modules (Gradle sub-projects)
+![module_dependencies](https://github.com/vphuong1205/WeatherForecast/master/master/misc/images/architecture_high_level.png?raw=true)
+
 We have four kinds of modules in the application:
 
 ### `app module`
