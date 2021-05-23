@@ -13,7 +13,7 @@ Modularized code-base approach with Single-Activity Architecture with Navigation
 We can think about each feature as the equivalent of microservice or private library.
 
 This is a diagram present dependencies between project modules (Gradle sub-projects)
-![module_dependencies](https://github.com/vphuong1205/WeatherForecast/master/master/misc/images/architecture_high_level.png?raw=true)
+![module_dependencies](https://github.com/vphuong1205/WeatherForecast/blob/master/misc/images/architecture_high_level.png?raw=true)
 
 We have four kinds of modules in the application:
 
@@ -38,9 +38,21 @@ We have four kinds of modules in the application:
 ### `feature-module`
 - The most common type of module containing all code related to a given feature.
 - `Clean architecture` is the "core architecture" of the application, so each `feature-module` contains own set of Clean architecture layers:
+![module_dependencies](https://github.com/vphuong1205/WeatherForecast/blob/master/misc/images/feature_clean_architecture?raw=true)
+
 Each feature module contains `deps` layer for dependency inject setup and 3 layers `data`, `domain`, `presentation` with distinct set of responsibilities.
 - Not depend on other feature modules.
 - Example: `feature-forecast`, `feature-settings` .
+
+### Data flow
+
+## Upcoming improvements
+- Jetpack Compose for UI
+- CI pipeline with GitHub Actions.
+- Encrypt database with SQLCipher to protect rooted devices
+- Migration to Dagger Hilt
+- Migration to Flow
+- Migration to Dynamic Feature modules
 
 ## Install guideline
 
@@ -54,6 +66,36 @@ Android Studio -> File -> New -> From Version control -> Git
 ### Use signed APK:
 - Quick install from [this signed release APK](https://github.com/vphuong1205/WeatherForecast/blob/master/app/release/app-release.apk)
 
+## Project technologies 
+* Tech-stack
+    * [100% Kotlin](https://kotlinlang.org/) + [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) - perform background operations
+    * [Retrofit](https://square.github.io/retrofit/) - networking
+    * [Jetpack](https://developer.android.com/jetpack)
+        * [Navigation](https://developer.android.com/topic/libraries/architecture/navigation/) - in-app navigation
+        * [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) - notify views about database change
+        * [Lifecycle](https://developer.android.com/topic/libraries/architecture/lifecycle) - perform an action when lifecycle state changes
+        * [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) - store and manage UI-related data in a lifecycle conscious way
+        * [Room](https://developer.android.com/jetpack/androidx/releases/room) - store offline cache
+    * [Dagger 2](https://dagger.dev/) - dependency injection
+* Modern Architecture
+    * Clean Architecture (at feature module level)
+    * Single activity architecture ( with[Navigation component](https://developer.android.com/guide/navigation/navigation-getting-started))
+    * MVVM + Usecase (presentation layer)
+    * [Android Architecture components](https://developer.android.com/topic/libraries/architecture) ([ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel), [LiveData](https://developer.android.com/topic/libraries/architecture/livedata), [Navigation](https://developer.android.com/jetpack/androidx/releases/navigation))
+    * [Android KTX](https://developer.android.com/kotlin/ktx) - Jetpack Kotlin extensions
+* Testing
+    * [Unit Tests](https://en.wikipedia.org/wiki/Unit_testing) ([JUnit 5](https://junit.org/junit5/)
+* UI
+    * [Material design](https://material.io/design)
+    * Reactive UI
+* Security
+    * Certificate Pinning with OkHttp client
+    * HTTPS to encrypt data transferring
+    * Sensitive data in gradle.properties file. In real-live setup these keys could be provided\overriden by CI.
+* Static analysis tools
+    * [Detekt](https://github.com/arturbosch/detekt#with-gradle) - verify complexity look for and code smell
+* Gradle
+    * [Gradle Kotlin DSL](https://docs.gradle.org/current/userguide/kotlin_dsl.html)
 
 ## Statement checklist
 - [x] 1. The application is a simple Android application which is written by Java/Kotlin.
