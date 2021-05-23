@@ -3,6 +3,7 @@ package com.nab.phuong.weather.deps
 import android.app.Application
 import com.nab.phuong.core_network.client.NetworkClient
 import com.nab.phuong.feature_forecast.deps.ForecastComponentDeps
+import com.nab.phuong.weather.home.deps.HomeComponentDeps
 
 open class DaggerDepsHolderImpl : DaggerDepsHolder, Application() {
 
@@ -12,8 +13,8 @@ open class DaggerDepsHolderImpl : DaggerDepsHolder, Application() {
         daggerComponents = DaggerComponents(application = this)
     }
 
-    override fun providesAppComponentDeps(): AppComponentDeps {
-        return daggerComponents.appDaggerComponent
+    override fun providesAppComponentDeps(): HomeComponentDeps {
+        return daggerComponents.homeDaggerComponent
     }
 
     override fun networkClient(): NetworkClient {

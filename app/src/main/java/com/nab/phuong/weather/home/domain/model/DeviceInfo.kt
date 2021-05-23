@@ -1,4 +1,4 @@
-package com.nab.phuong.weather.device
+package com.nab.phuong.weather.home.domain.model
 
 data class DeviceInfo(
     val rooted: Boolean = DEFAULT_ROOTED_STATUS

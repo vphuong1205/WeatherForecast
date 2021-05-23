@@ -16,7 +16,7 @@
         android:theme="@style/Theme.WeatherForecast"
         android:usesCleartextTraffic="false"
         tools:ignore="AllowBackup">
-        <activity android:name=".presentation.NavHostActivity">
+        <activity android:name="com.nab.phuong.weather.home.presentation.NavHostHomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

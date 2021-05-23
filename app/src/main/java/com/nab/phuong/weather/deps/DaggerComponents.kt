@@ -7,6 +7,8 @@ import com.nab.phuong.core_network.deps.NetworkComponent
 import com.nab.phuong.feature_forecast.deps.DaggerForecastComponent
 import com.nab.phuong.feature_forecast.deps.ForecastComponent
 import com.nab.phuong.weather.BuildConfig
+import com.nab.phuong.weather.home.deps.HomeComponent
+import com.nab.phuong.weather.home.deps.DaggerHomeComponent
 
 class DaggerComponents(private val application: Application) {
     private val networkConfig by lazy {
@@ -21,8 +23,8 @@ class DaggerComponents(private val application: Application) {
         )
     }
 
-    val appDaggerComponent by lazy {
-        getInternalAppDaggerComponent()
+    val homeDaggerComponent by lazy {
+        getInternalHomeDaggerComponent()
     }
 
     val networkDaggerComponent by lazy {
@@ -33,8 +35,8 @@ class DaggerComponents(private val application: Application) {
         getInternalForecastDaggerComponent()
     }
 
-    private fun getInternalAppDaggerComponent(): AppComponent {
-        return DaggerAppComponent
+    private fun getInternalHomeDaggerComponent(): HomeComponent {
+        return DaggerHomeComponent
             .builder()
             .context(application)
             .build()

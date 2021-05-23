@@ -1,4 +1,4 @@
-package com.nab.phuong.weather.presentation
+package com.nab.phuong.weather.home.presentation
 
 import android.os.Bundle
 import android.widget.Toast
@@ -6,13 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.nab.phuong.core_viewmodel.ViewModelFactory
 import com.nab.phuong.weather.R
-import com.nab.phuong.weather.databinding.ForecastActivityBinding
-import com.nab.phuong.weather.deps.AppDepsProvider
-import com.nab.phuong.weather.presentation.model.RootDeviceState
-import com.nab.phuong.weather.presentation.viewmodel.HostViewModel
+import com.nab.phuong.weather.databinding.NavHostHomeActivityBinding
+import com.nab.phuong.weather.home.deps.HomeDepsProvider
+import com.nab.phuong.weather.home.presentation.model.RootDeviceState
+import com.nab.phuong.weather.home.presentation.viewmodel.HostViewModel
 import javax.inject.Inject
 
-class NavHostActivity : AppCompatActivity() {
+class NavHostHomeActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -20,14 +20,14 @@ class NavHostActivity : AppCompatActivity() {
         ViewModelProvider(this, viewModelFactory).get(HostViewModel::class.java)
     }
 
-    private lateinit var binding: ForecastActivityBinding
+    private lateinit var binding: NavHostHomeActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (this.applicationContext as AppDepsProvider)
+        (this.applicationContext as HomeDepsProvider)
             .providesAppComponentDeps()
-            .inject(navHostActivity = this)
+            .inject(navHostHomeActivity = this)
         super.onCreate(savedInstanceState)
-        binding = ForecastActivityBinding.inflate(layoutInflater)
+        binding = NavHostHomeActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initialiseObservers()
         viewModel.checkRootStatusInfo()

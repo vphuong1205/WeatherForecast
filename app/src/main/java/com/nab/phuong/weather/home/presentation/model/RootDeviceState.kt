@@ -1,4 +1,4 @@
-package com.nab.phuong.weather.presentation.model
+package com.nab.phuong.weather.home.presentation.model
 
 sealed class RootDeviceState {
     object RootedDevice : RootDeviceState()
