@@ -69,6 +69,16 @@ class ForecastRepositoryImpl(
         return ForecastResult.Success(data = cities)
     }
 
+    /**
+     * To save cached database we will delete all forecast from yesterday and sooner,
+     * they are expired and will not be show anymore
+     */
+    override suspend fun clearExpiredForecasts() {
+        forecastDao.deleteExpiredForecasts(
+            expiredDate = getTodayBaseTime()
+        )
+    }
+
     private suspend fun loadForecastsFromLocal(
         cityId: Long,
         limitDaysCount: Int
@@ -76,19 +86,17 @@ class ForecastRepositoryImpl(
         return forecastDao.getForecastByCity(
             cityId = cityId,
             limitDays = limitDaysCount,
-            dateTime = backToLimitTimesBaseTodayTime(limitDay = limitDaysCount)
+            dateTime = getTodayBaseTime()
         ).map {
             forecastMapper.mapToDomainModel(input = it)
         }
     }
 
-    /**
-     * With limitDay =7
-     * Get the base time from 7 days before today
-     */
     @VisibleForTesting
     fun backToLimitTimesBaseTodayTime(limitDay: Int) =
-        (System.currentTimeMillis() / DAY_IN_MILLIS * DAY_IN_MILLIS) - limitDay * DAY_IN_MILLIS
+        getTodayBaseTime() - limitDay * DAY_IN_MILLIS
+
+    private fun getTodayBaseTime() = (System.currentTimeMillis() / DAY_IN_MILLIS * DAY_IN_MILLIS)
 
     companion object {
         const val DAY_IN_MILLIS = 1000 * 60 * 60 * 24

@@ -15,4 +15,6 @@ interface ForecastRepository {
     ): ForecastResult<Forecast>
 
     suspend fun loadCities(): ForecastResult<City>
+
+    suspend fun clearExpiredForecasts()
 }

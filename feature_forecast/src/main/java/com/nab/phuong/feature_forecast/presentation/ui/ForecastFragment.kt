@@ -137,6 +137,11 @@ class ForecastFragment : Fragment() {
                     false
                 }
             }
+            if (text.toString().searchable().not()) {
+                showHideInputSearchTermError(
+                    shouldShowError = false
+                )
+            }
         }
         binding.buttonSearch.setOnClickListener {
             checkToSearch()

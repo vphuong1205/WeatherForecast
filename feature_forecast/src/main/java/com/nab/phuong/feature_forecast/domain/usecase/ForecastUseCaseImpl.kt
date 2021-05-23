@@ -24,4 +24,8 @@ class ForecastUseCaseImpl @Inject constructor(
     ): ForecastResult<Forecast> {
         return forecastRepository.queryForecasts(cityName = cityName, cityId = cityId)
     }
+
+    override suspend fun clearExpiredForecasts() {
+        forecastRepository.clearExpiredForecasts()
+    }
 }

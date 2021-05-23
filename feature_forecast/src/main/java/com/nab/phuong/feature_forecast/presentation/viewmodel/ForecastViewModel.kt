@@ -24,6 +24,12 @@ class ForecastViewModel @Inject constructor(
     private val _cityState = MutableLiveData<CityState>()
     val cityState: LiveData<CityState> = _cityState
 
+    init {
+        viewModelScope.launch(dispatcher.io) {
+            forecastUseCase.clearExpiredForecasts()
+        }
+    }
+
     fun searchForecastByCity(cityName: String) {
         viewModelScope.launch(dispatcher.io) {
 

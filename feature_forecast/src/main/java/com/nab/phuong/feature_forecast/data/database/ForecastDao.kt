@@ -20,4 +20,7 @@ interface ForecastDao {
 
     @Query("DELETE FROM forecast")
     fun deleteForecasts()
+
+    @Query("DELETE FROM forecast WHERE date <= :expiredDate")
+    fun deleteExpiredForecasts(expiredDate: Long)
 }

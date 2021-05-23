@@ -11,4 +11,6 @@ interface ForecastUseCase {
     suspend fun loadCities(): ForecastResult<City>
 
     suspend fun searchForecasts(cityName: String, cityId: Long? = null): ForecastResult<Forecast>
+
+    suspend fun clearExpiredForecasts()
 }
