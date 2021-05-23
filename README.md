@@ -2,29 +2,44 @@
 Android app to retrieve weather information based on searching city name
 
 ## Architecture
-Android Single-Activity Architecture with Navigation Component
+### Approach
+Modularized code-base approach with Single-Activity Architecture with Navigation Component for benefits:
 
-Feature related code is placed inside one of the feature-module. We can think about each feature as the equivalent of microservice or private library.
-
-The modularized code-base approach provides benefit:
-- better separation of concerns. Feature related classes life in different modules and can't be referenced without explicit module dependency.
+- Better separation of concerns. Feature related classes life in different modules and can't be referenced without explicit module dependency.
 - Features can be developed in parallel by different teams or developers
 - Each feature can be developed in isolation, independently from other features
 - Faster compile time
 
-We have three kinds of modules in the application:
-### app module: 
+We can think about each feature as the equivalent of microservice or private library.
+
+We have four kinds of modules in the application:
+
+### `app module`
 - This is the main module. 
 - Navigation setup with Single-Activity Architecture
 - It contains code that wires multiple modules together (dependency injection setup... etc.) 
 - Fundamental application configuration (custom application class, etc.).
 
-### Core-modules
-- Modules that some of the features could depend on
-- This is helpful for reuse code only between few feature modules
+### `core-module`
+- The infrastructure layer is the core of the building block of the entire project
+- Hold the pure infrastructure without domain knowledge
+- Module that some of the features could depend
+- Example: `core-network`, `core-authentication`.
 
 
-## Install Application
+### `lib-module`
+- Module that some of the features could depend
+- Can be shared across the features
+- Example: `lib-viewmodel`, `lib-utils`. 
+
+### `feature-module`
+- The most common type of module containing all code related to a given feature.
+- `Clean architecture` is the "core architecture" of the application, so each `feature-module` contains own set of Clean architecture layers:
+Each feature module contains `deps` layer for dependency inject setup and 3 layers `data`, `domain`, `presentation` with distinct set of responsibilities.
+- Not depend on other feature modules.
+- Example: `feature-forecast`, `feature-settings` .
+
+## Install guideline
 
 ### Android Studio
 

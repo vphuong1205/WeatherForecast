@@ -79,7 +79,7 @@ dependencies {
     api(Dependencies.Navigation.NAVIGATION_FRAGMENT_KTX)
 
     implementation(project(ModuleDependencies.CORE_NETWORK))
-    implementation(project(ModuleDependencies.CORE_VIEWMODEL))
+    implementation(project(ModuleDependencies.LIB_VIEWMODEL))
     implementation(project(ModuleDependencies.FEATURE_FORECAST))
 
     addTestsDependencies()

@@ -50,7 +50,7 @@ android {
 }
 
 dependencies {
-    implementation(project(ModuleDependencies.CORE_VIEWMODEL))
+    implementation(project(ModuleDependencies.LIB_VIEWMODEL))
     implementation(project(ModuleDependencies.CORE_NETWORK))
 
     implementation(Dependencies.Kotlin.KOTLIN)
