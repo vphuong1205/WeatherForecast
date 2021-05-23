@@ -1,11 +1,14 @@
 package com.nab.phuong.weather.deps
 
 import android.content.Context
+import com.nab.phuong.weather.presentation.AppPresentationModule
 import dagger.BindsInstance
 import dagger.Component
+import javax.inject.Singleton
 
-@Component
-interface AppComponent {
+@Component(modules = [AppPresentationModule::class])
+@Singleton
+interface AppComponent : AppComponentDeps {
 
     @Component.Builder
     interface Builder {

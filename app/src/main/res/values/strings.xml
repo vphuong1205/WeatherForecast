@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Weather Forecast</string>
+    <string name="app_rooted_device_message">This is rooted device</string>
 </resources>

@@ -59,17 +59,21 @@ android {
 
 dependencies {
     implementation(Dependencies.Kotlin.KOTLIN)
+
     implementation(Dependencies.Androidx.CORE_KTX)
     implementation(Dependencies.Androidx.LIVE_DATA_KTX)
     implementation(Dependencies.Androidx.VIEWMODEL_KTX)
     implementation(Dependencies.Androidx.APPCOMPAT)
     implementation(Dependencies.Androidx.CONSTRAINT_LAYOUT)
+    
     implementation(Dependencies.Google.MATERIAL)
+
     implementation(Dependencies.Dagger.DAGGER)
     implementation(Dependencies.Dagger.DAGGER_ANDROID)
-    implementation(Dependencies.Retrofit.RETROFIT)
     kapt(Dependencies.Dagger.DAGGER_ANDROID_PROCESSOR)
     kapt(Dependencies.Dagger.DAGGER_COMPILER)
+
+    implementation(Dependencies.RootBeer.ROOT_BEER)
 
     api(Dependencies.Navigation.NAVIGATION_UI_KTX)
     api(Dependencies.Navigation.NAVIGATION_FRAGMENT_KTX)

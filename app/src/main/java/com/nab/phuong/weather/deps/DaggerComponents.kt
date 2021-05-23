@@ -21,12 +21,23 @@ class DaggerComponents(private val application: Application) {
         )
     }
 
+    val appDaggerComponent by lazy {
+        getInternalAppDaggerComponent()
+    }
+
     val networkDaggerComponent by lazy {
         getInternalNetworkDaggerComponent()
     }
 
     val forecastDaggerComponent by lazy {
         getInternalForecastDaggerComponent()
+    }
+
+    private fun getInternalAppDaggerComponent(): AppComponent {
+        return DaggerAppComponent
+            .builder()
+            .context(application)
+            .build()
     }
 
     private fun getInternalNetworkDaggerComponent(): NetworkComponent {
@@ -43,6 +54,5 @@ class DaggerComponents(private val application: Application) {
             .context(application)
             .networkClient(networkDaggerComponent.networkClient())
             .build()
-
     }
 }

@@ -12,6 +12,7 @@ object Dependencies {
         const val NAVIGATION = "2.3.5"
         const val ROOM = "2.3.0"
         const val MOSHI = "1.12.0"
+        const val ROOT_BEER = "0.0.9"
     }
 
     object Gradle {
@@ -71,5 +72,9 @@ object Dependencies {
 
         // optional - Kotlin Extensions and Coroutines support for Room
         const val ROOM_KTX = "androidx.room:room-ktx:${Versions.ROOM}"
+    }
+
+    object RootBeer {
+        const val ROOT_BEER = "com.scottyab:rootbeer-lib:${Versions.ROOT_BEER}"
     }
 }

@@ -12,6 +12,10 @@ open class DaggerDepsHolderImpl : DaggerDepsHolder, Application() {
         daggerComponents = DaggerComponents(application = this)
     }
 
+    override fun providesAppComponentDeps(): AppComponentDeps {
+        return daggerComponents.appDaggerComponent
+    }
+
     override fun networkClient(): NetworkClient {
         return daggerComponents.networkDaggerComponent.networkClient()
     }
