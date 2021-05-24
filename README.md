@@ -160,7 +160,7 @@ controls.
   - [x] a. Talkback: Use a screen reader.
   - [x] b. Scaling Text: Display size and font size: To change the size of items on your screen,
 adjust the display size or font size.
-- [ ] 11.Entity relationship diagram for the database and solution diagrams for the
+- [x] 11.Entity relationship diagram for the database and solution diagrams for the
 components, infrastructure design if any
 - [x] 12.Readme file includes:
   - [x] a. Brief explanation for the software development principles, patterns & practices being
