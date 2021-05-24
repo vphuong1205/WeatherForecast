@@ -2,12 +2,13 @@ package com.nab.phuong.feature_forecast.presentation.viewmodel
 
 import androidx.lifecycle.Observer
 import com.nab.phuong.feature_forecast.domain.model.Forecast
-import com.nab.phuong.feature_forecast.domain.model.ForecastResult
+import com.nab.phuong.feature_forecast.domain.model.Result
 import com.nab.phuong.feature_forecast.domain.usecase.ForecastUseCase
 import com.nab.phuong.feature_forecast.presentation.model.CityState
 import com.nab.phuong.feature_forecast.presentation.model.ForeCastState
-import com.nab.phuong.feature_forecast.utils.DataForTesting
-import com.nab.phuong.feature_forecast.utils.InstantExecutorExtension
+import com.nab.phuong.feature_forecast.DataForTesting
+import com.nab.phuong.lib_utils.test.InstantExecutorExtension
+import com.nab.phuong.lib_utils.coroutines.CoroutinesDispatcherProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -72,7 +73,7 @@ internal class ForecastViewModelTest {
     @Test
     internal fun `Given a cached city list  when load city suggestions then expose city list to observer`() {
         testDispatcher.runBlockingTest {
-            val result = ForecastResult.Success(data = DataForTesting.cityList)
+            val result = Result.Success(data = DataForTesting.cityList)
             `when`(forecastUseCase.loadCities()).thenReturn(result)
 
             viewModel.loadCitySuggestions()
@@ -88,7 +89,7 @@ internal class ForecastViewModelTest {
     @Test
     internal fun `Given a city name when search forecast by city success then expose list forecast to observer`() {
         testDispatcher.runBlockingTest {
-            val result = ForecastResult.Success<Forecast>(data = listOf())
+            val result = Result.Success<Forecast>(data = listOf())
             `when`(forecastUseCase.searchForecasts(cityName = DataForTesting.LONDON_CITY_NAME)).thenReturn(
                 result
             )
@@ -110,7 +111,7 @@ internal class ForecastViewModelTest {
     @Test
     internal fun `Given a city name when search forecast by city failed then expose error to observer`() {
         testDispatcher.runBlockingTest {
-            val result = ForecastResult.Error<Forecast>(
+            val result = Result.Error<Forecast>(
                 message = DataForTesting.NETWORK_ERROR_MESSAGE
             )
             `when`(forecastUseCase.searchForecasts(cityName = DataForTesting.LONDON_CITY_NAME)).thenReturn(
@@ -133,7 +134,7 @@ internal class ForecastViewModelTest {
     @Test
     internal fun `Given a city name which cached in database when search forecast by city then expose list forecasts to observer`() {
         testDispatcher.runBlockingTest {
-            val cities = ForecastResult.Success(data = listOf(DataForTesting.cityList.first()))
+            val cities = Result.Success(data = listOf(DataForTesting.cityList.first()))
             `when`(
                 forecastUseCase.getCityByName(
                     cityName = DataForTesting.LONDON_CITY_NAME
@@ -141,7 +142,7 @@ internal class ForecastViewModelTest {
             ).thenReturn(
                 cities
             )
-            val forecast = ForecastResult.Success<Forecast>(data = listOf())
+            val forecast = Result.Success<Forecast>(data = listOf())
             `when`(
                 forecastUseCase.searchForecasts(
                     cityName = DataForTesting.LONDON_CITY_NAME,

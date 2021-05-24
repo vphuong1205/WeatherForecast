@@ -2,6 +2,7 @@ object Dependencies {
     object Versions {
         const val GRADLE = "4.1.3"
         const val KOTLIN = "1.4.31"
+        const val KOTLIN_COROUTINES_CORE = "1.5.0"
         const val CORE_KTX = "1.3.2"
         const val LIFE_CYCLE_KTX = "2.3.1"
         const val APPCOMPAT = "1.2.0"
@@ -24,6 +25,8 @@ object Dependencies {
 
     object Kotlin {
         const val KOTLIN = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.KOTLIN}"
+        const val KOTLIN_COROUTINES_CORE =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.KOTLIN_COROUTINES_CORE}"
     }
 
     object Androidx {

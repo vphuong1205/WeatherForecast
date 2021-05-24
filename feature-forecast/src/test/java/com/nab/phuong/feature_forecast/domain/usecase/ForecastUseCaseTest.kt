@@ -1,9 +1,9 @@
 package com.nab.phuong.feature_forecast.domain.usecase
 
 import com.nab.phuong.feature_forecast.domain.model.Forecast
-import com.nab.phuong.feature_forecast.domain.model.ForecastResult
+import com.nab.phuong.feature_forecast.domain.model.Result
 import com.nab.phuong.feature_forecast.domain.repository.ForecastRepository
-import com.nab.phuong.feature_forecast.utils.DataForTesting
+import com.nab.phuong.feature_forecast.DataForTesting
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.BeforeEach
@@ -30,7 +30,7 @@ class ForecastUseCaseTest {
     @Test
     fun `Given a city name when get city by name success then return success cities result to caller`() {
         runBlockingTest {
-            val expectation = ForecastResult.Success(data = DataForTesting.cityList)
+            val expectation = Result.Success(data = DataForTesting.cityList)
             `when`(forecastRepository.getCityByName(cityName = DataForTesting.LONDON_CITY_NAME)).thenReturn(
                 expectation
             )
@@ -44,7 +44,7 @@ class ForecastUseCaseTest {
     @Test
     fun `Given a cities cached in repo when load city suggestions then return success cities result to caller`() {
         runBlockingTest {
-            val expectation = ForecastResult.Success(data = DataForTesting.cityList)
+            val expectation = Result.Success(data = DataForTesting.cityList)
             `when`(forecastRepository.loadCities()).thenReturn(expectation)
 
             val result = forecastUseCase.loadCities()
@@ -56,7 +56,7 @@ class ForecastUseCaseTest {
     @Test
     fun `Given a city name when search forecast success then return forecasts success result to caller`() {
         runBlockingTest {
-            val expectation = ForecastResult.Success(data = DataForTesting.forecastList)
+            val expectation = Result.Success(data = DataForTesting.forecastList)
             `when`(forecastRepository.queryForecasts(cityName = DataForTesting.LONDON_CITY_NAME)).thenReturn(
                 expectation
             )
@@ -70,7 +70,7 @@ class ForecastUseCaseTest {
     @Test
     fun `Given a city name when search forecast failed then return forecasts failed result to caller`() {
         runBlockingTest {
-            val expectation = ForecastResult.Error<Forecast>(DataForTesting.NETWORK_ERROR_MESSAGE)
+            val expectation = Result.Error<Forecast>(DataForTesting.NETWORK_ERROR_MESSAGE)
             `when`(forecastRepository.queryForecasts(cityName = DataForTesting.LONDON_CITY_NAME)).thenReturn(
                 expectation
             )

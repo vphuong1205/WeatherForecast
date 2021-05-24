@@ -43,15 +43,12 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
-    packagingOptions {
-        exclude("META-INF/AL2.0")
-        exclude("META-INF/LGPL2.1")
-    }
 }
 
 dependencies {
     implementation(project(ModuleDependencies.LIB_VIEWMODEL))
     implementation(project(ModuleDependencies.CORE_NETWORK))
+    implementation(project(ModuleDependencies.LIB_UTILS))
 
     implementation(Dependencies.Kotlin.KOTLIN)
     implementation(Dependencies.Androidx.CONSTRAINT_LAYOUT)

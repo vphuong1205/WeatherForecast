@@ -7,7 +7,7 @@ import com.nab.phuong.feature_forecast.data.mapper.ForecastMapper
 import com.nab.phuong.feature_forecast.data.network.WeatherForecastNetworkService
 import com.nab.phuong.feature_forecast.domain.model.City
 import com.nab.phuong.feature_forecast.domain.model.Forecast
-import com.nab.phuong.feature_forecast.domain.model.ForecastResult
+import com.nab.phuong.feature_forecast.domain.model.Result
 import com.nab.phuong.feature_forecast.domain.repository.ForecastRepository
 
 class ForecastRepositoryImpl(
@@ -18,11 +18,11 @@ class ForecastRepositoryImpl(
     private val appID: String
 ) : ForecastRepository {
 
-    override suspend fun getCityByName(cityName: String): ForecastResult<City> {
+    override suspend fun getCityByName(cityName: String): Result<City> {
         cityDao.getCityByName(cityName = cityName)?.let {
-            return ForecastResult.Success(listOf(forecastMapper.mapToDomainModel(input = it)))
+            return Result.Success(listOf(forecastMapper.mapToDomainModel(input = it)))
         }
-        return ForecastResult.Success(listOf())
+        return Result.Success(listOf())
     }
 
     /**
@@ -32,12 +32,12 @@ class ForecastRepositoryImpl(
         cityName: String,
         cityId: Long?,
         limitDaysCount: Int
-    ): ForecastResult<Forecast> {
+    ): Result<Forecast> {
 
         if (cityId != null) {
             val forecasts = loadForecastsFromLocal(cityId = cityId, limitDaysCount = limitDaysCount)
             if (forecasts.size == limitDaysCount) {
-                return ForecastResult.Success(data = forecasts)
+                return Result.Success(data = forecasts)
             }
         }
 
@@ -50,7 +50,7 @@ class ForecastRepositoryImpl(
             val forecastEntities = forecastMapper.mapToDatabaseModel(input = forecastApiResponse)
             cityDao.insertCity(city = forecastMapper.mapToDatabaseModel(input = forecastApiResponse.city))
             forecastDao.insertForecasts(forecasts = forecastEntities)
-            ForecastResult.Success(
+            Result.Success(
                 data = forecastEntities.map {
                     forecastMapper.mapToDomainModel(
                         input = it
@@ -58,15 +58,15 @@ class ForecastRepositoryImpl(
                 }
             )
         } catch (exception: Exception) {
-            ForecastResult.Error(forecastMapper.parseExceptionToErrorMessage(exception = exception))
+            Result.Error(forecastMapper.parseExceptionToErrorMessage(exception = exception))
         }
     }
 
-    override suspend fun loadCities(): ForecastResult<City> {
+    override suspend fun loadCities(): Result<City> {
         val cities = cityDao.getAllCities().map {
             forecastMapper.mapToDomainModel(input = it)
         }
-        return ForecastResult.Success(data = cities)
+        return Result.Success(data = cities)
     }
 
     /**
@@ -93,10 +93,7 @@ class ForecastRepositoryImpl(
     }
 
     @VisibleForTesting
-    fun backToLimitTimesBaseTodayTime(limitDay: Int) =
-        getTodayBaseTime() - limitDay * DAY_IN_MILLIS
-
-    private fun getTodayBaseTime() = (System.currentTimeMillis() / DAY_IN_MILLIS * DAY_IN_MILLIS)
+    fun getTodayBaseTime() = (System.currentTimeMillis() / DAY_IN_MILLIS * DAY_IN_MILLIS)
 
     companion object {
         const val DAY_IN_MILLIS = 1000 * 60 * 60 * 24

@@ -6,10 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nab.phuong.feature_forecast.domain.model.City
 import com.nab.phuong.feature_forecast.domain.model.Forecast
-import com.nab.phuong.feature_forecast.domain.model.ForecastResult
+import com.nab.phuong.feature_forecast.domain.model.Result
 import com.nab.phuong.feature_forecast.domain.usecase.ForecastUseCase
 import com.nab.phuong.feature_forecast.presentation.model.CityState
 import com.nab.phuong.feature_forecast.presentation.model.ForeCastState
+import com.nab.phuong.lib_utils.coroutines.CoroutinesDispatcherProvider
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -39,13 +40,13 @@ class ForecastViewModel @Inject constructor(
 
             when (val result =
                 forecastUseCase.searchForecasts(cityName = cityName, cityId = cityId)) {
-                is ForecastResult.Success<Forecast> -> {
+                is Result.Success<Forecast> -> {
                     _forecastState.postValue(ForeCastState.ListData(data = result.data))
                     if (cityId == null) {
                         loadCitySuggestions()
                     }
                 }
-                is ForecastResult.Error -> {
+                is Result.Error -> {
                     _forecastState.postValue(ForeCastState.Error(errorMessage = result.message))
                 }
                 else -> {
@@ -58,15 +59,15 @@ class ForecastViewModel @Inject constructor(
     fun loadCitySuggestions() {
         viewModelScope.launch(dispatcher.io) {
             when (val result = forecastUseCase.loadCities()) {
-                is ForecastResult.Success<City> -> {
+                is Result.Success<City> -> {
                     _cityState.postValue(CityState.ListData(result.data))
                 }
             }
         }
     }
 
-    private fun getCityId(result: ForecastResult<City>): Long? =
-        if (result is ForecastResult.Success && result.data.isNotEmpty()) {
+    private fun getCityId(result: Result<City>): Long? =
+        if (result is Result.Success && result.data.isNotEmpty()) {
             result.data.first().cityId
         } else {
             null

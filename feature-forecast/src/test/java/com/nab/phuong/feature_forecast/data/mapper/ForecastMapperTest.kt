@@ -2,7 +2,7 @@ package com.nab.phuong.feature_forecast.data.mapper
 
 import android.content.res.Resources
 import com.nab.phuong.feature_forecast.R
-import com.nab.phuong.feature_forecast.utils.DataForTesting
+import com.nab.phuong.feature_forecast.DataForTesting
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mock

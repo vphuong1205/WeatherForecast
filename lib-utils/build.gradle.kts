@@ -1,5 +1,5 @@
-import extension.addTestsDependencies
-import extension.implementation
+import extension.*
+import org.gradle.kotlin.dsl.testImplementation
 
 plugins {
     id(BuildPlugins.ANDROID_LIBRARY)
@@ -51,7 +51,15 @@ dependencies {
     implementation(Dependencies.Kotlin.KOTLIN)
     implementation(Dependencies.Google.MATERIAL)
     implementation(Dependencies.Androidx.CORE_KTX)
+    implementation(Dependencies.Kotlin.KOTLIN_COROUTINES_CORE)
+    implementation(Dependencies.Dagger.DAGGER)
+    implementation(Dependencies.Dagger.DAGGER_ANDROID)
+    kapt(Dependencies.Dagger.DAGGER_ANDROID_PROCESSOR)
+    kapt(Dependencies.Dagger.DAGGER_COMPILER)
 
+    implementation(TestDependencies.Junit.KOTLIN_TEST)
+    implementation(TestDependencies.Jupiter.JUNIT5_API)
     addTestsDependencies()
+    addAndroidTestsDependencies()
 }
 

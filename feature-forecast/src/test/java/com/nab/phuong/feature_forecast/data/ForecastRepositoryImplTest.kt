@@ -6,8 +6,8 @@ import com.nab.phuong.feature_forecast.data.database.model.CityDataModel
 import com.nab.phuong.feature_forecast.data.mapper.ForecastMapper
 import com.nab.phuong.feature_forecast.data.network.WeatherForecastNetworkService
 import com.nab.phuong.feature_forecast.data.repository.ForecastRepositoryImpl
-import com.nab.phuong.feature_forecast.domain.model.ForecastResult
-import com.nab.phuong.feature_forecast.utils.DataForTesting
+import com.nab.phuong.feature_forecast.DataForTesting
+import com.nab.phuong.feature_forecast.domain.model.Result
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.BeforeEach
@@ -64,9 +64,10 @@ class ForecastRepositoryImplTest {
             `when`(forecastMapper.mapToDomainModel(input = expectation)).thenReturn(
                 DataForTesting.londonCity
             )
-            val result = forecastRepository.getCityByName(cityName = DataForTesting.LONDON_CITY_NAME)
+            val result =
+                forecastRepository.getCityByName(cityName = DataForTesting.LONDON_CITY_NAME)
 
-            assertTrue(result is ForecastResult.Success)
+            assertTrue(result is Result.Success)
             assertEquals(DataForTesting.londonCity, result.data[0])
         }
     }
@@ -74,11 +75,14 @@ class ForecastRepositoryImplTest {
     @Test
     fun `Given a invalid city name when get city by name success then return success empty cities to caller`() {
         runBlockingTest {
-            `when`(cityDao.getCityByName(cityName = DataForTesting.INVALID_CITY_NAME)).thenReturn(null)
+            `when`(cityDao.getCityByName(cityName = DataForTesting.INVALID_CITY_NAME)).thenReturn(
+                null
+            )
 
-            val result = forecastRepository.getCityByName(cityName = DataForTesting.INVALID_CITY_NAME)
+            val result =
+                forecastRepository.getCityByName(cityName = DataForTesting.INVALID_CITY_NAME)
 
-            assertTrue(result is ForecastResult.Success)
+            assertTrue(result is Result.Success)
             assertTrue(result.data.isEmpty())
         }
     }
@@ -95,7 +99,7 @@ class ForecastRepositoryImplTest {
 
             val result = forecastRepository.loadCities()
 
-            assertTrue(result is ForecastResult.Success)
+            assertTrue(result is Result.Success)
             assertEquals(DataForTesting.londonCity, result.data[0])
         }
     }
@@ -108,7 +112,7 @@ class ForecastRepositoryImplTest {
 
             val result = forecastRepository.loadCities()
 
-            assertTrue(result is ForecastResult.Success)
+            assertTrue(result is Result.Success)
             assertTrue(result.data.isEmpty())
         }
     }
@@ -120,7 +124,7 @@ class ForecastRepositoryImplTest {
                 forecastDao.getForecastByCity(
                     cityId = 1,
                     limitDays = 7,
-                    dateTime = forecastRepository.backToLimitTimesBaseTodayTime(limitDay = 7)
+                    dateTime = forecastRepository.getTodayBaseTime()
                 )
             ).thenReturn(
                 DataForTesting.forecastDataList
@@ -135,9 +139,12 @@ class ForecastRepositoryImplTest {
             )
 
             val result =
-                forecastRepository.queryForecasts(cityId = 1, cityName = DataForTesting.LONDON_CITY_NAME)
+                forecastRepository.queryForecasts(
+                    cityId = 1,
+                    cityName = DataForTesting.LONDON_CITY_NAME
+                )
 
-            assertTrue(result is ForecastResult.Success)
+            assertTrue(result is Result.Success)
             assertEquals(result.data.size, DataForTesting.forecastDataList.size)
             result.data.forEach {
                 assertEquals(it, DataForTesting.forecast)
@@ -152,7 +159,7 @@ class ForecastRepositoryImplTest {
                 forecastDao.getForecastByCity(
                     cityId = 1,
                     limitDays = 7,
-                    dateTime = forecastRepository.backToLimitTimesBaseTodayTime(limitDay = 7)
+                    dateTime = forecastRepository.getTodayBaseTime()
                 )
             ).thenReturn(
                 listOf()
@@ -173,7 +180,7 @@ class ForecastRepositoryImplTest {
                 cityId = 1, cityName = DataForTesting.LONDON_CITY_NAME
             )
 
-            assertTrue(result is ForecastResult.Error)
+            assertTrue(result is Result.Error)
             assertEquals(result.message, DataForTesting.NETWORK_ERROR_MESSAGE)
         }
     }
@@ -185,7 +192,7 @@ class ForecastRepositoryImplTest {
                 forecastDao.getForecastByCity(
                     cityId = 1,
                     limitDays = 7,
-                    dateTime = forecastRepository.backToLimitTimesBaseTodayTime(limitDay = 7)
+                    dateTime = forecastRepository.getTodayBaseTime()
                 )
             ).thenReturn(
                 listOf()
@@ -216,7 +223,7 @@ class ForecastRepositoryImplTest {
                     cityId = 1, cityName = DataForTesting.LONDON_CITY_NAME
                 )
 
-            assertTrue(result is ForecastResult.Success)
+            assertTrue(result is Result.Success)
             assertEquals(result.data.size, 7)
             result.data.forEach {
                 assertEquals(it, DataForTesting.forecast)

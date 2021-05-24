@@ -1,13 +1,11 @@
 package com.nab.phuong.feature_forecast.presentation.ui
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
@@ -19,10 +17,12 @@ import com.nab.phuong.core_viewmodel.ViewModelFactory
 import com.nab.phuong.feature_forecast.R
 import com.nab.phuong.feature_forecast.databinding.FragmentFeatureForecastBinding
 import com.nab.phuong.feature_forecast.deps.ForecastDepsProvider
-import com.nab.phuong.feature_forecast.presentation.viewmodel.ForecastViewModel
 import com.nab.phuong.feature_forecast.presentation.model.CityState
 import com.nab.phuong.feature_forecast.presentation.model.ForeCastState
 import com.nab.phuong.feature_forecast.presentation.ui.adapter.ForecastListAdapter
+import com.nab.phuong.feature_forecast.presentation.viewmodel.ForecastViewModel
+import com.nab.phuong.lib_utils.hideKeyboard
+import com.nab.phuong.lib_utils.searchable
 import javax.inject.Inject
 
 class ForecastFragment : Fragment() {
@@ -125,7 +125,8 @@ class ForecastFragment : Fragment() {
             doOnTextChanged { charSequence: CharSequence?, _, _, _ ->
                 if (hasFocus()) {
                     showHideInputSearchTermError(
-                        shouldShowError = charSequence.toString().searchable().not()
+                        shouldShowError = charSequence.toString()
+                            .searchable(minLength = MINIMUM_SEARCHABLE_TEXT_LENGTH).not()
                     )
                 }
             }
@@ -137,7 +138,7 @@ class ForecastFragment : Fragment() {
                     false
                 }
             }
-            if (text.toString().searchable().not()) {
+            if (text.toString().searchable(minLength = MINIMUM_SEARCHABLE_TEXT_LENGTH).not()) {
                 showHideInputSearchTermError(
                     shouldShowError = false
                 )
@@ -151,7 +152,8 @@ class ForecastFragment : Fragment() {
     private fun handleKeyboardActionDone() {
         with(binding.editTextCityName) {
             showHideInputSearchTermError(
-                shouldShowError = text.toString().searchable().not()
+                shouldShowError = text.toString()
+                    .searchable(minLength = MINIMUM_SEARCHABLE_TEXT_LENGTH).not()
             )
             dismissDropDown()
             hideKeyboard()
@@ -175,20 +177,12 @@ class ForecastFragment : Fragment() {
     private fun checkToSearch() {
         binding.buttonError.isVisible = false
         with(binding.editTextCityName) {
-            if (editableText.toString().searchable()) {
+            if (editableText.toString().searchable(minLength = MINIMUM_SEARCHABLE_TEXT_LENGTH)) {
                 clearFocus()
                 hideKeyboard()
                 viewModel.searchForecastByCity(cityName = binding.editTextCityName.text.toString())
             }
         }
-    }
-
-    private fun String?.searchable(): Boolean =
-        !(this.isNullOrEmpty() || this.trim().length < MINIMUM_SEARCHABLE_TEXT_LENGTH)
-
-    private fun View.hideKeyboard() {
-        val imm = this.context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(this.windowToken, 0)
     }
 
     companion object {

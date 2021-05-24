@@ -1,4 +1,4 @@
-package com.nab.phuong.feature_forecast.utils
+package com.nab.phuong.feature_forecast
 
 import com.nab.phuong.feature_forecast.data.database.model.CityDataModel
 import com.nab.phuong.feature_forecast.data.database.model.ForecastDataModel
@@ -9,7 +9,6 @@ import com.nab.phuong.feature_forecast.data.network.model.WeatherNetworkModel
 import com.nab.phuong.feature_forecast.data.network.response.ForecastApiResponse
 import com.nab.phuong.feature_forecast.domain.model.City
 import com.nab.phuong.feature_forecast.domain.model.Forecast
-import com.squareup.moshi.Json
 
 object DataForTesting {
     internal const val INVALID_CITY_NAME = "Dummy city"
