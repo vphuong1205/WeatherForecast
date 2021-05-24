@@ -3,7 +3,7 @@ Android app to retrieve weather information based on searching city name
 
 ## Architecture
 ### Approach
-Modularized code-base approach with Single-Activity Architecture with Navigation Component for benefits:
+Modularized code-base approach with Single-Activity Architecture and Navigation Component for benefits:
 
 - Better separation of concerns. Feature related classes life in different modules and can't be referenced without explicit module dependency.
 - Features can be developed in parallel by different teams or developers
@@ -37,14 +37,41 @@ We have four kinds of modules in the application:
 
 ### `feature-module`
 - The most common type of module containing all code related to a given feature.
-- `Clean architecture` is the "core architecture" of the application, so each `feature-module` contains own set of Clean architecture layers:
-![module_dependencies](https://github.com/vphuong1205/WeatherForecast/blob/master/misc/images/feature_clean_architecture?raw=true)
-
 Each feature module contains `deps` layer for dependency inject setup and 3 layers `data`, `domain`, `presentation` with distinct set of responsibilities.
 - Not depend on other feature modules.
 - Example: `feature-forecast`, `feature-settings` .
+- `Clean architecture` is the "core architecture" of the application, so each `feature-module` contains own set of Clean architecture layers:
+![Clean architecture](https://github.com/vphuong1205/WeatherForecast/blob/master/misc/images/feature_clean_architecture.png?raw=true)
 
-### Data flow
+#### Presentation layer
+This layer is closest to what the user sees on the screen. 
+The presentation layer is MVVM (Jetpack ViewModel used to preserve data across activity restart)
+Components:
+
+- View (Fragment) - presents data on the screen and pass user interactions to View Model. Views are hard to test, so they should be as simple as possible.
+- ViewModel - dispatches (through LiveData) state changes to the view and deals with user interactions (these view models are not simply POJO classes).
+- ViewState - common state for a single view
+
+#### Domain layer
+Core layer of the application. 
+Be independent of any other layers, changes in other layers will have no effect on domain layer eg. changing database (data layer) or screen UI (presentation layer) ideally will not result in any code change withing domain layer.
+Components:
+- UseCase - contains business logic
+- DomainModel - defies the core structure of the data that will be used within the application. This is the source of truth for application data.
+- Repository interface - required to keep the domain layer independent from the data layer
+
+#### Data layer
+Manages application data and exposes these data sources as repositories to the domain layer. 
+Typical responsibilities of this layer would be to retrieve data from the internet and optionally cache this data locally
+
+Components:
+- Repository is exposing data to the domain layer, create high-quality data source for the domain layer, not to perform any business logic (domain layer use case responsibility).
+- Mapper - maps data model/network model to domain model (to keep domain layer independent from the data layer).
+- RetrofitService with API endpoints to comunicate with backend
+- Data model: with Database Model and Network Json model. Moshi used to parse Network data to Database Model. Mapper will parse Database Model to DomainModel for Domain Layer.
+
+#### Data flow
+![Data Flow](https://github.com/vphuong1205/WeatherForecast/blob/master/misc/images/data_flow.png?raw=true)
 
 ## Upcoming improvements
 - Jetpack Compose for UI
@@ -70,6 +97,7 @@ Android Studio -> File -> New -> From Version control -> Git
 * Tech-stack
     * [100% Kotlin](https://kotlinlang.org/) + [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) - perform background operations
     * [Retrofit](https://square.github.io/retrofit/) - networking
+    * [Moshi](https://github.com/square/moshi) - modern JSON library parser
     * [Jetpack](https://developer.android.com/jetpack)
         * [Navigation](https://developer.android.com/topic/libraries/architecture/navigation/) - in-app navigation
         * [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) - notify views about database change
