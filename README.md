@@ -73,26 +73,6 @@ Components:
 #### Data flow
 ![Data Flow](https://github.com/vphuong1205/WeatherForecast/blob/master/misc/images/data_flow.png?raw=true)
 
-## Upcoming improvements
-- Jetpack Compose for UI
-- CI pipeline with GitHub Actions.
-- Encrypt database with SQLCipher to protect rooted devices
-- Migration to Dagger Hilt
-- Migration to Flow
-- Migration to Dynamic Feature modules
-
-## Install guideline
-
-### Android Studio
-
-Android Studio -> File -> New -> From Version control -> Git
-- Enter https://github.com/vphuong1205/WeatherForecast.git into URL field an press Clone button
-- Let start sync and wait some minutes then you can install the app to devices
-- ./gradlew testDebugUnitTest - to run unit tests
-
-### Use signed APK:
-- Quick install from [this signed release APK](https://github.com/vphuong1205/WeatherForecast/blob/master/app/release/app-release.apk)
-
 ## Project technologies 
 * Tech-stack
     * [100% Kotlin](https://kotlinlang.org/) + [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) - perform background operations
@@ -124,6 +104,26 @@ Android Studio -> File -> New -> From Version control -> Git
     * [Detekt](https://github.com/arturbosch/detekt#with-gradle) - verify complexity look for and code smell
 * Gradle
     * [Gradle Kotlin DSL](https://docs.gradle.org/current/userguide/kotlin_dsl.html)
+
+## Upcoming improvements
+- Jetpack Compose for UI
+- CI pipeline with GitHub Actions.
+- Encrypt database with SQLCipher to protect rooted devices
+- Migration to Dagger Hilt
+- Migration to Flow
+- Migration to Dynamic Feature modules
+
+## Install guideline
+
+### Android Studio
+
+Android Studio -> File -> New -> From Version control -> Git
+- Enter https://github.com/vphuong1205/WeatherForecast.git into URL field an press Clone button
+- Let start sync and wait some minutes then you can install the app to devices
+- ./gradlew testDebugUnitTest - to run unit tests
+
+### Use signed APK:
+- Quick install from [this signed release APK](https://github.com/vphuong1205/WeatherForecast/blob/master/app/release/app-release.apk)
 
 ## Statement checklist
 - [x] 1. The application is a simple Android application which is written by Java/Kotlin.
@@ -163,9 +163,9 @@ adjust the display size or font size.
 - [ ] 11.Entity relationship diagram for the database and solution diagrams for the
 components, infrastructure design if any
 - [x] 12.Readme file includes:
-  - [ ] a. Brief explanation for the software development principles, patterns & practices being
+  - [x] a. Brief explanation for the software development principles, patterns & practices being
 applied
-  - [ ] b. Brief explanation for the code folder structure and the key Java/Kotlin libraries and
+  - [x] b. Brief explanation for the code folder structure and the key Java/Kotlin libraries and
 frameworks being used
-  - [ ] c. All the required steps in order to get the application run on local computer
+  - [x] c. All the required steps in order to get the application run on local computer
   - [x] d. Checklist of items the candidate has done.
