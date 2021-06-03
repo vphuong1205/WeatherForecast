@@ -6,7 +6,7 @@ buildscript {
     }
     dependencies {
         classpath(Dependencies.Gradle.GRADLE)
-        classpath(Dependencies.Gradle.KOTLIN_GRADLE_PLUGIN)
+        classpath(Dependencies.Kotlin.KOTLIN_GRADLE_PLUGIN)
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
