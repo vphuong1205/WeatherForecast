@@ -7,6 +7,7 @@ plugins {
     id(BuildPlugins.ANDROID_APPLICATION)
     id(BuildPlugins.KOTLIN_ANDROID)
     id(BuildPlugins.KOTLIN_KAPT)
+    id(BuildPlugins.HILT_ANDROID)
 }
 
 android {
@@ -76,10 +77,13 @@ dependencies {
     
     implementation(Dependencies.Google.MATERIAL)
 
-    implementation(Dependencies.Dagger.DAGGER)
+    /*implementation(Dependencies.Dagger.DAGGER)
     implementation(Dependencies.Dagger.DAGGER_ANDROID)
     kapt(Dependencies.Dagger.DAGGER_ANDROID_PROCESSOR)
-    kapt(Dependencies.Dagger.DAGGER_COMPILER)
+    kapt(Dependencies.Dagger.DAGGER_COMPILER)*/
+
+    implementation(Dependencies.DaggerHilt.HILT_ANDROID)
+    kapt(Dependencies.DaggerHilt.HILT_ANDROID_COMPILER)
 
     implementation(Dependencies.RootBeer.ROOT_BEER)
 
@@ -87,7 +91,7 @@ dependencies {
     api(Dependencies.Navigation.NAVIGATION_FRAGMENT_KTX)
 
     implementation(project(ModuleDependencies.CORE_NETWORK))
-    implementation(project(ModuleDependencies.LIB_VIEWMODEL))
+    //implementation(project(ModuleDependencies.LIB_VIEWMODEL))
     implementation(project(ModuleDependencies.FEATURE_FORECAST))
 
     addTestsDependencies()

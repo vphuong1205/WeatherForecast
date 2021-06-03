@@ -2,23 +2,19 @@ package com.nab.phuong.weather.home.presentation
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import com.nab.phuong.core_viewmodel.ViewModelFactory
 import com.nab.phuong.weather.R
 import com.nab.phuong.weather.databinding.NavHostHomeActivityBinding
 import com.nab.phuong.weather.home.deps.HomeDepsProvider
 import com.nab.phuong.weather.home.presentation.model.RootDeviceState
 import com.nab.phuong.weather.home.presentation.viewmodel.HostViewModel
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NavHostHomeActivity : AppCompatActivity() {
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
 
-    private val viewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(HostViewModel::class.java)
-    }
+    private val viewModel: HostViewModel by viewModels()
 
     private lateinit var binding: NavHostHomeActivityBinding
 

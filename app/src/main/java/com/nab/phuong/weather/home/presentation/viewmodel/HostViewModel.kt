@@ -5,8 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.nab.phuong.weather.home.domain.usecase.HomeUseCase
 import com.nab.phuong.weather.home.presentation.model.RootDeviceState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+@HiltViewModel
 class HostViewModel @Inject constructor(
     private val useCase: HomeUseCase
 ) : ViewModel() {

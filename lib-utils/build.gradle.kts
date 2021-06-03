@@ -1,5 +1,7 @@
-import extension.*
-import org.gradle.kotlin.dsl.testImplementation
+import extension.addTestsDependencies
+import extension.addAndroidTestsDependencies
+import extension.implementation
+import extension.kapt
 
 plugins {
     id(BuildPlugins.ANDROID_LIBRARY)

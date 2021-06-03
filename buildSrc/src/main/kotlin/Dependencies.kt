@@ -10,9 +10,8 @@ object Dependencies {
         const val KOTLIN = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${version}"
         const val KOTLIN_GRADLE_PLUGIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:${version}"
 
-        private const val coroutineVersion = "1.5.0"
-        const val KOTLIN_COROUTINES_CORE =
-            "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutineVersion}"
+        private const val cVersion = "1.5.0"
+        const val KOTLIN_COROUTINES_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$cVersion"
     }
 
     object Androidx {
@@ -54,6 +53,13 @@ object Dependencies {
         const val DAGGER_ANDROID = "com.google.dagger:dagger-android:${version}"
         const val DAGGER_COMPILER = "com.google.dagger:dagger-compiler:${version}"
         const val DAGGER_ANDROID_PROCESSOR = "com.google.dagger:dagger-android-processor:${version}"
+    }
+
+    object DaggerHilt {
+        private const val version = "2.35"
+        const val HILT_ANDROID = "com.google.dagger:hilt-android:$version"
+        const val HILT_ANDROID_COMPILER = "com.google.dagger:hilt-android-compiler:$version"
+        const val HILT_ANDROID_GRADLE = "com.google.dagger:hilt-android-gradle-plugin:$version"
     }
 
     object Navigation {
