@@ -7,6 +7,7 @@ plugins {
     id(BuildPlugins.ANDROID_LIBRARY)
     id(BuildPlugins.KOTLIN_ANDROID)
     id(BuildPlugins.KOTLIN_KAPT)
+    id(BuildPlugins.HILT_ANDROID)
 }
 
 android {
@@ -54,14 +55,12 @@ dependencies {
     implementation(Dependencies.Google.MATERIAL)
     implementation(Dependencies.Androidx.CORE_KTX)
     implementation(Dependencies.Kotlin.KOTLIN_COROUTINES_CORE)
-    implementation(Dependencies.Dagger.DAGGER)
-    implementation(Dependencies.Dagger.DAGGER_ANDROID)
-    kapt(Dependencies.Dagger.DAGGER_ANDROID_PROCESSOR)
-    kapt(Dependencies.Dagger.DAGGER_COMPILER)
+
+    implementation(Dependencies.DaggerHilt.HILT_ANDROID)
+    kapt(Dependencies.DaggerHilt.HILT_ANDROID_COMPILER)
 
     implementation(TestDependencies.Junit.KOTLIN_TEST)
     implementation(TestDependencies.Jupiter.JUNIT5_API)
     addTestsDependencies()
     addAndroidTestsDependencies()
 }
-
