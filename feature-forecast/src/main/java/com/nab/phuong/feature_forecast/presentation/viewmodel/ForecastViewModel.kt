@@ -10,10 +10,11 @@ import com.nab.phuong.feature_forecast.domain.model.Result
 import com.nab.phuong.feature_forecast.domain.usecase.ForecastUseCase
 import com.nab.phuong.feature_forecast.presentation.model.CityState
 import com.nab.phuong.feature_forecast.presentation.model.ForeCastState
-import com.nab.phuong.lib_utils.coroutines.CoroutinesDispatcherProvider
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class ForecastViewModel @Inject constructor(
     private val forecastUseCase: ForecastUseCase,
     private val dispatcher: CoroutinesDispatcherProvider,

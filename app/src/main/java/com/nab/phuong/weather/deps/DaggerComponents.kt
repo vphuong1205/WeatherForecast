@@ -7,8 +7,8 @@ import com.nab.phuong.core_network.deps.NetworkComponent
 import com.nab.phuong.feature_forecast.deps.DaggerForecastComponent
 import com.nab.phuong.feature_forecast.deps.ForecastComponent
 import com.nab.phuong.weather.BuildConfig
-import com.nab.phuong.weather.home.deps.HomeComponent
 import com.nab.phuong.weather.home.deps.DaggerHomeComponent
+import com.nab.phuong.weather.home.deps.HomeComponent
 
 class DaggerComponents(private val application: Application) {
     private val networkConfig by lazy {
@@ -54,6 +54,7 @@ class DaggerComponents(private val application: Application) {
         return DaggerForecastComponent
             .builder()
             .context(application)
+            .networkConfig(networkDaggerComponent.networkConfig())
             .networkClient(networkDaggerComponent.networkClient())
             .build()
     }

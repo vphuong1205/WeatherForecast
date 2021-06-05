@@ -8,7 +8,6 @@ import com.nab.phuong.feature_forecast.presentation.model.CityState
 import com.nab.phuong.feature_forecast.presentation.model.ForeCastState
 import com.nab.phuong.feature_forecast.DataForTesting
 import com.nab.phuong.lib_utils.test.InstantExecutorExtension
-import com.nab.phuong.lib_utils.coroutines.CoroutinesDispatcherProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher

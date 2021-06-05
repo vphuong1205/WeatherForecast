@@ -7,6 +7,7 @@ plugins {
     id(BuildPlugins.ANDROID_LIBRARY)
     id(BuildPlugins.KOTLIN_ANDROID)
     id(BuildPlugins.KOTLIN_KAPT)
+    id(BuildPlugins.HILT_ANDROID)
 }
 
 android {
@@ -20,6 +21,11 @@ android {
         versionName(BuildAndroidConfig.VERSION_NAME)
         testInstrumentationRunner(BuildAndroidConfig.TEST_INSTRUMENTATION_RUNNER)
         buildConfigFieldFromGradleProperty("apiAppId")
+        buildConfigFieldFromGradleProperty("apiBaseUrl")
+        buildConfigFieldFromGradleProperty("pinningCertificatePattern")
+        buildConfigFieldFromGradleProperty("pinningCertificateMain")
+        buildConfigFieldFromGradleProperty("pinningCertificateBackup1")
+        buildConfigFieldFromGradleProperty("pinningCertificateBackup2")
     }
 
     buildTypes {
@@ -46,7 +52,6 @@ android {
 }
 
 dependencies {
-    implementation(project(ModuleDependencies.LIB_VIEWMODEL))
     implementation(project(ModuleDependencies.CORE_NETWORK))
     implementation(project(ModuleDependencies.LIB_UTILS))
 
@@ -62,10 +67,8 @@ dependencies {
     implementation(Dependencies.Room.ROOM_KTX)
     kapt(Dependencies.Room.ROOM_COMPILER)
 
-    implementation(Dependencies.Dagger.DAGGER)
-    implementation(Dependencies.Dagger.DAGGER_ANDROID)
-    kapt(Dependencies.Dagger.DAGGER_ANDROID_PROCESSOR)
-    kapt(Dependencies.Dagger.DAGGER_COMPILER)
+    implementation(Dependencies.DaggerHilt.HILT_ANDROID)
+    kapt(Dependencies.DaggerHilt.HILT_ANDROID_COMPILER)
 
     api(Dependencies.Navigation.NAVIGATION_UI_KTX)
     api(Dependencies.Navigation.NAVIGATION_FRAGMENT_KTX)
