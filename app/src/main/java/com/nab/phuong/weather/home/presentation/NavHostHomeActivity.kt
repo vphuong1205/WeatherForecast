@@ -6,7 +6,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.nab.phuong.weather.R
 import com.nab.phuong.weather.databinding.NavHostHomeActivityBinding
-import com.nab.phuong.weather.home.deps.HomeDepsProvider
 import com.nab.phuong.weather.home.presentation.model.RootDeviceState
 import com.nab.phuong.weather.home.presentation.viewmodel.HostViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,9 +18,6 @@ class NavHostHomeActivity : AppCompatActivity() {
     private lateinit var binding: NavHostHomeActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (this.applicationContext as HomeDepsProvider)
-            .providesAppComponentDeps()
-            .inject(navHostHomeActivity = this)
         super.onCreate(savedInstanceState)
         binding = NavHostHomeActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)

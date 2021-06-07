@@ -1,6 +1,5 @@
 package com.nab.phuong.feature_forecast.presentation.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +14,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.nab.phuong.feature_forecast.R
 import com.nab.phuong.feature_forecast.databinding.FragmentFeatureForecastBinding
-import com.nab.phuong.feature_forecast.deps.ForecastDepsProvider
 import com.nab.phuong.feature_forecast.presentation.model.CityState
 import com.nab.phuong.feature_forecast.presentation.model.ForeCastState
 import com.nab.phuong.feature_forecast.presentation.ui.adapter.ForecastListAdapter
@@ -39,12 +37,6 @@ class ForecastFragment : Fragment() {
         ArrayAdapter(
             this.requireContext(), R.layout.view_city_vh, mutableListOf<String>()
         )
-    }
-
-    override fun onAttach(context: Context) {
-        (context.applicationContext as ForecastDepsProvider)
-            .providesForecastComponentDeps().inject(forecastFragment = this)
-        super.onAttach(context)
     }
 
     override fun onCreateView(
